@@ -36,8 +36,13 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "coveralls": "^2.11.9",
-    "istanbul": "^0.4.4",
-    "mocha": "^3.0.0"
+    "coveralls": "^2.11.16",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.2.0"
+  },
+  "dependencies": {
+    "is-plain-obj": "^1.1.0",
+    "mkdirp": "^0.5.1",
+    "pify": "^2.3.0"
   }
 }
