@@ -1,0 +1,43 @@
+{
+  "name": "fsify",
+  "version": "0.0.1",
+  "authors": [
+    "Tobias Reich <tobias@electerious.com>"
+  ],
+  "description": "Convert an object into a persistent or temporary directory structure.",
+  "main": "src/index.js",
+  "keywords": [
+    "fs",
+    "file",
+    "files",
+    "folder",
+    "folders",
+    "tree",
+    "structure",
+    "object",
+    "json",
+    "persistent",
+    "temporary",
+    "directory",
+    "dir"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/electerious/fsify",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/electerious/fsify.git"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "test": "istanbul cover _mocha"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "coveralls": "^2.11.9",
+    "istanbul": "^0.4.4",
+    "mocha": "^3.0.0"
+  }
+}
