@@ -7,7 +7,14 @@ const isFile         = require('./isFile')
 const writeDirectory = require('./writeDirectory')
 const writeFile      = require('./writeFile')
 
-module.exports = function convert(structure = [], cwd) {
+/**
+ * Converts an object into a directory structure.
+ * @public
+ * @param {?Array} structure - Array of objects containing information about a directory or file.
+ * @param {String} cwd - Directory to start from.
+ * @returns {Promise}
+ */
+const writeStructure = function(structure = [], cwd) {
 
 	return new Promise((resolve, reject) => {
 
@@ -24,9 +31,9 @@ module.exports = function convert(structure = [], cwd) {
 			if (isDirectory(entry)===true) {
 
 				// Create folder recursively or use existing and
-				// run convert again for the content of the directory
+				// run writeStructure again for the content of the directory
 				return writeDirectory(absolutePath, mode)
-					.then(() => convert(contents, absolutePath))
+					.then(() => writeStructure(contents, absolutePath))
 					.then(resolve, reject)
 
 			}
@@ -46,3 +53,8 @@ module.exports = function convert(structure = [], cwd) {
 	})
 
 }
+
+/**
+ * @public
+ */
+module.exports = writeStructure

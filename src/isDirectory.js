@@ -2,6 +2,12 @@
 
 const get = require('./get')
 
+/**
+ * Checks if object is a representation of a directory.
+ * @public
+ * @param {Object} obj
+ * @returns {Boolean}
+ */
 module.exports = function(obj) {
 
 	// Get constant during fn call. Would be empty otherwise.
