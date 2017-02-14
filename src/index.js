@@ -30,7 +30,7 @@ module.exports = function(structure = [], opts = {}) {
 		// Support relative and absolute paths
 		opts.cwd = path.join(process.cwd(), opts.cwd)
 
-		convert(structure, opts.cwd)
+		writeStructure(structure, opts.cwd)
 			.then(resolve, reject)
 
 	})
