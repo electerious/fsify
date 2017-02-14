@@ -2,6 +2,7 @@
 
 const path           = require('path')
 const isPlainObj     = require('is-plain-obj')
+const parseStructure = require('./parseStructure')
 const writeStructure = require('./writeStructure')
 
 /**
@@ -30,7 +31,8 @@ module.exports = function(structure = [], opts = {}) {
 		// Support relative and absolute paths
 		opts.cwd = path.resolve(process.cwd(), opts.cwd)
 
-		writeStructure(structure, opts.cwd)
+		parseStructure(structure, opts.cwd)
+			.then((parsedStructure) => writeStructure(parsedStructure))
 			.then(resolve, reject)
 
 	})

@@ -1,10 +1,8 @@
 'use strict'
 
-const path           = require('path')
 const get            = require('./get')
 const isDirectory    = require('./isDirectory')
 const isFile         = require('./isFile')
-const writeStructure = require('./writeStructure')
 const writeDirectory = require('./writeDirectory')
 const writeFile      = require('./writeFile')
 
@@ -12,35 +10,28 @@ const writeFile      = require('./writeFile')
  * Writes an entry as directory or file.
  * @public
  * @param {Object} entry - Objects containing information about a directory or file.
- * @param {String} cwd - Directory to start from.
- * @returns {Promise}
+ * @param {Function} writeStructure - Function that converts an array into a directory structure.
+ * @returns {Promise} Returns the following properties if resolved: {Object}.
  */
-module.exports = function(entry, cwd) {
+module.exports = function(entry, writeStructure) {
 
 	return new Promise((resolve, reject) => {
 
-		const name     = get.name(entry)
-		const contents = get.contents(entry)
-		const encoding = get.encoding(entry)
-		const mode     = get.mode(entry)
-		const flag     = get.flag(entry)
+		const { type, name, contents, encoding, mode, flag } = get(entry)
 
-		const absolutePath = path.join(cwd, name)
+		if (isDirectory(type, contents)===true) {
 
-		if (isDirectory(entry)===true) {
-
-			// Create folder recursively or use existing and
-			// run writeStructure again for the content of the directory
-			return writeDirectory(absolutePath, mode)
-				.then(() => writeStructure(contents, absolutePath))
+			return writeDirectory(name, mode)
+				.then(() => writeStructure(contents, name))
+				.then(() => entry)
 				.then(resolve, reject)
 
 		}
 
-		if (isFile(entry)===true) {
+		if (isFile(type, contents)===true) {
 
-			// Create file with content
-			return writeFile(absolutePath, contents, encoding, mode, flag)
+			return writeFile(name, contents, encoding, mode, flag)
+				.then(() => entry)
 				.then(resolve, reject)
 
 		}

@@ -1,23 +1,36 @@
 'use strict'
 
-module.exports = {}
+const isPlainObj = require('is-plain-obj')
 
-module.exports.name = (obj) => {
+/**
+ * Parses an entry.
+ * @public
+ * @param {Object} entry - An object that represents a directory or file.
+ */
+module.exports = function(entry) {
 
-	const name = obj.name
+	if (isPlainObj(entry)===false) {
+		throw new Error(`Each entry of 'structure' must be an object`)
+	}
 
-	if (typeof obj.name!=='string') throw new Error(`Every directory and file must have a 'name'`)
+	const name     = entry.name
+	const type     = entry.type
+	const contents = entry.contents
+	const mode     = entry.mode
+	const encoding = entry.encoding
+	const flag     = entry.flag
 
-	return name
+	if (typeof name!=='string') {
+		throw new Error(`Every directory and file must have a 'name'`)
+	}
+
+	return {
+		name,
+		type,
+		contents,
+		mode,
+		encoding,
+		flag
+	}
 
 }
-
-module.exports.type = (obj) => obj.type
-
-module.exports.contents = (obj) => obj.contents || obj.content
-
-module.exports.mode = (obj) => obj.mode
-
-module.exports.encoding = (obj) => obj.encoding
-
-module.exports.flag = (obj) => obj.flag
