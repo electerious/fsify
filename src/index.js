@@ -45,18 +45,3 @@ module.exports = function(structure = [], opts = {}) {
  */
 module.exports.DIRECTORY = 'directory'
 module.exports.FILE      = 'file'
-
-module.exports([
-	{ type: 'directory', name: '.', contents: [
-		{ type: 'directory', name: 'Khan Academy', contents: [
-			{ type: 'file', name: 'IMG_8448.txt', contents: 'hi' },
-			{ type: 'file', name: 'IMG_8450.txt', contents: 'hi' },
-			{ type: 'file', name: 'IMG_8451.txt' },
-			{ type: 'file', name: 'IMG_8455.txt', contents: 'hi' },
-			{ type: 'file', name: 'IMG_8455.txt', contents: 'hi' },
-			{ type: 'directory', name: 'Khan Academy4' }
-		]}
-	]}
-], {
-	cwd: './test/'
-}).catch((err) => console.log(err))
