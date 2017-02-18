@@ -42,11 +42,11 @@ describe('get()', function() {
 	it('should return an parsed entry with known fields only', function() {
 
 		const outEntry = {
-			name: 'name',
 			type: 'file',
+			name: 'name',
 			contents: '',
-			mode: 0o666,
 			encoding: 'utf8',
+			mode: 0o666,
 			flag: 'w',
 			isDirectory: false,
 			isFile: true
