@@ -1,10 +1,10 @@
 'use strict'
 
-const pify   = require('pify')
-const mkdirp = require('mkdirp')
+const fs   = require('fs')
+const pify = require('pify')
 
 /**
- * Creates a new directory and any necessary subdirectories.
+ * Creates a new directory. Subdirectories must exist.
  * Reuses existing directories without deleting them.
  * @public
  * @param {String} path - Path to create.
@@ -13,8 +13,7 @@ const mkdirp = require('mkdirp')
  */
 module.exports = function(path, mode) {
 
-	return pify(mkdirp)(path, {
-		mode
-	})
+	return pify(fs.mkdir)(path, mode)
+		.catch((err) => { if (err.code!=='EEXIST') throw err })
 
 }

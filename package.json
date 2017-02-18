@@ -42,7 +42,6 @@
   },
   "dependencies": {
     "is-plain-obj": "^1.1.0",
-    "mkdirp": "^0.5.1",
     "pify": "^2.3.0"
   }
 }
