@@ -11,7 +11,7 @@ describe('get()', function() {
 
 			get([])
 
-		})
+		}, `Each entry of 'structure' must be an object`)
 
 	})
 
@@ -21,7 +21,21 @@ describe('get()', function() {
 
 			get({})
 
-		})
+		}, `Each directory and file must have a 'name'`)
+
+	})
+
+	it('should throw an error when entry has no type', function() {
+
+		const entry = {
+			name: 'name'
+		}
+
+		assert.throws(() => {
+
+			get(entry)
+
+		}, `Each entry must have a known 'type'`)
 
 	})
 
