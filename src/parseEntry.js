@@ -23,7 +23,7 @@ module.exports = function(entry, cwd, parseStructure) {
 
 		const absolutePath = entry.name = path.join(cwd, name)
 
-		if (isDirectory(type, contents)===true) {
+		if (isDirectory(type)===true) {
 
 			return parseStructure(contents, absolutePath)
 				.then((contens) => entry.contents = contens)
@@ -32,7 +32,7 @@ module.exports = function(entry, cwd, parseStructure) {
 
 		}
 
-		if (isFile(type, contents)===true) {
+		if (isFile(type)===true) {
 
 			return resolve(entry)
 
