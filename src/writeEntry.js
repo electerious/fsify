@@ -1,8 +1,6 @@
 'use strict'
 
 const get            = require('./get')
-const isDirectory    = require('./isDirectory')
-const isFile         = require('./isFile')
 const writeDirectory = require('./writeDirectory')
 const writeFile      = require('./writeFile')
 
@@ -17,9 +15,9 @@ module.exports = function(entry, writeStructure) {
 
 	return new Promise((resolve, reject) => {
 
-		const { type, name, contents, encoding, mode, flag } = get(entry)
+		const { type, name, contents, encoding, mode, flag, isDirectory, isFile } = get(entry)
 
-		if (isDirectory(type)===true) {
+		if (isDirectory===true) {
 
 			return writeDirectory(name, mode)
 				.then(() => writeStructure(contents, name))
@@ -28,7 +26,7 @@ module.exports = function(entry, writeStructure) {
 
 		}
 
-		if (isFile(type)===true) {
+		if (isFile===true) {
 
 			return writeFile(name, contents, encoding, mode, flag)
 				.then(() => entry)

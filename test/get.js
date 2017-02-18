@@ -33,7 +33,9 @@ describe('get()', function() {
 			contents: '',
 			mode: 0o666,
 			encoding: 'utf8',
-			flag: 'w'
+			flag: 'w',
+			isDirectory: false,
+			isFile: true
 		}
 
 		const inEntry = Object.assign({}, outEntry, {

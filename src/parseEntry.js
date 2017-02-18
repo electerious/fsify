@@ -1,9 +1,7 @@
 'use strict'
 
-const path        = require('path')
-const get         = require('./get')
-const isDirectory = require('./isDirectory')
-const isFile      = require('./isFile')
+const path = require('path')
+const get  = require('./get')
 
 /**
  * Parses an entry (directory or file).
@@ -19,11 +17,11 @@ module.exports = function(entry, cwd, parseStructure) {
 
 		entry = Object.assign({}, entry)
 
-		const { type, name, contents } = get(entry)
+		const { type, name, contents, isDirectory, isFile } = get(entry)
 
 		const absolutePath = entry.name = path.join(cwd, name)
 
-		if (isDirectory(type)===true) {
+		if (isDirectory===true) {
 
 			return parseStructure(contents, absolutePath)
 				.then((contens) => entry.contents = contens)
@@ -32,11 +30,13 @@ module.exports = function(entry, cwd, parseStructure) {
 
 		}
 
-		if (isFile(type)===true) {
+		if (isFile===true) {
 
 			return resolve(entry)
 
 		}
+
+		throw new Error(`Unknown entry type for entry with the name '${ name }'`)
 
 	})
 
