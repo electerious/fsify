@@ -21,6 +21,10 @@ module.exports = function(entry, cwd, parseStructure) {
 
 		const absolutePath = entry.name = path.join(cwd, name)
 
+		if (absolutePath===cwd) {
+			throw new Error(`Directory name points to the same directory as the surrounding directory`)
+		}
+
 		if (isDirectory===true) {
 
 			return parseStructure(contents, absolutePath)

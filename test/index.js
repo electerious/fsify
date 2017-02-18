@@ -40,6 +40,24 @@ describe('index()', function() {
 
 	})
 
+	it('should reject when structure directory name points to the current directory', function() {
+
+		const structure = [
+			{
+				type: index.DIRECTORY,
+				name: '.'
+			}
+		]
+
+		return index(structure).catch((err) => {
+
+			assert.isNotNull(err)
+			assert.isDefined(err)
+
+		})
+
+	})
+
 	it('should write a file with contents', function() {
 
 		const structure = [
