@@ -10,7 +10,7 @@ const writeStructure = require('./writeStructure')
  * @public
  * @param {?Array} structure - Array of objects containing information about a directory or file.
  * @param {?Object} opts - Optional options.
- * @returns {Promise} Returns the following properties if resolved: {Object}.
+ * @returns {Promise} Returns the following properties if resolved: {Array}.
  */
 module.exports = function(structure = [], opts = {}) {
 
