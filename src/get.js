@@ -21,7 +21,7 @@ module.exports = function(entry) {
 	const flag     = entry.flag
 
 	if (typeof name!=='string') {
-		throw new Error(`Every directory and file must have a 'name'`)
+		throw new Error(`Each directory and file must have a 'name'`)
 	}
 
 	return {
