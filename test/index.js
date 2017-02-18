@@ -118,13 +118,9 @@ describe('index()', function() {
 			}
 		]
 
-		const cwd = randomString()
+		const cwd = './test'
 
-		return pify(fs.mkdir)(cwd).then(() => {
-
-			return index(structure, { cwd })
-
-		}).then((_structure) => {
+		return index(structure, { cwd }).then((_structure) => {
 
 			assert.strictEqual(path.resolve(process.cwd(), cwd, structure[0].name), _structure[0].name)
 
