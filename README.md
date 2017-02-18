@@ -1,5 +1,210 @@
-# fsify (WIP)
+# fsify
 
 [![Travis Build Status](https://travis-ci.org/electerious/fsify.svg?branch=master)](https://travis-ci.org/electerious/fsify) [![Coverage Status](https://coveralls.io/repos/github/electerious/fsify/badge.svg?branch=master)](https://coveralls.io/github/electerious/fsify?branch=master) [![Dependencies](https://david-dm.org/electerious/fsify.svg)](https://david-dm.org/electerious/fsify#info=dependencies)
 
-Convert an object into a persistent or temporary directory structure.
+Convert an array of objects into a persistent or temporary directory structure.
+
+## Description
+
+`fsify` creates a persistent or temporary directory structure from an array of objects. It's like the opposite of the Linux and Unix `tree` command.
+
+## Install
+
+```
+npm install fsify
+```
+
+## Usage
+
+### Structure with content
+
+```
+.
+├── dirname
+│   └── filename
+└── filename
+```
+
+```js
+const fsify = require('fsify')
+
+const structure = [
+	{
+		type: fsify.DIRECTORY,
+		name: 'dirname',
+		contents: [
+			{
+				type: fsify.FILE,
+				name: 'filename',
+				contents: 'data'
+			}
+		]
+	},
+	{
+		type: fsify.FILE,
+		name: 'filename',
+		contents: 'data'
+	}
+]
+
+fsify(structure)
+	.then((structure) => console.log(structure))
+	.catch((err) => console.error(err))
+```
+
+### Deeply nested structure
+
+```
+.
+└── dirname
+    └── dirname
+        └── filename
+```
+
+```js
+const fsify = require('fsify')
+
+const structure = [
+	{
+		type: fsify.DIRECTORY,
+		name: 'dirname',
+		contents: [
+			{
+				type: fsify.DIRECTORY,
+				name: 'dirname',
+				contents: [
+					{
+						type: fsify.FILE,
+						name: 'filename'
+					}
+				]
+			}
+		]
+	}
+]
+
+fsify(structure)
+	.then((structure) => console.log(structure))
+	.catch((err) => console.error(err))
+```
+
+### File in existing directory
+
+```
+dirname/
+└── filename
+```
+
+```js
+const fsify = require('fsify')
+
+const structure = [
+	{
+		type: fsify.FILE,
+		name: 'filename'
+	}
+]
+
+const opts = {
+	cwd: 'dirname/'
+}
+
+fsify(structure, opts)
+	.then((structure) => console.log(structure))
+	.catch((err) => console.error(err))
+```
+
+### Structure from `tree -J`
+
+`tree` is a Linux and Unix command that lists the contents of directories in a tree-like format. It's a helpful CLI to view the structure of your file system. The flag `-J` prints out an JSON representation of the tree. The output can be used in `fsify`.
+
+```
+tree -J > tree.json
+```
+
+```js
+const fs    = require('fs')
+const fsify = require('fsify')
+
+const structure = fs.readFileSync('tree.json', 'utf8')
+
+fsify(structure)
+	.then((structure) => console.log(structure))
+	.catch((err) => console.error(err))
+```
+
+## API
+
+### Parameters
+
+- `structure` `{Array}` Array of objects containing information about a directory or file.
+- `opts` `{?Object}` Options.
+	- `cwd` `{?String}` - Custom relative or absolute path. Defaults to `process.cwd()`.
+
+### Returns
+
+- `structure` `Array` Equal to the input structure, but parsed and with a absolute path as the name.
+
+## Structure
+
+A structure is an array of objects that represents a directory structure. Each object must contain information about a directory or file.
+
+The structure …
+
+```
+.
+├── dirname
+│   └── filename
+└── filename
+```
+
+… is equal to …
+
+```js
+[
+	{
+		type: fsify.DIRECTORY,
+		name: 'dirname',
+		contents: [
+			{
+				type: fsify.FILE,
+				name: 'filename',
+				contents: 'data'
+			}
+		]
+	},
+	{
+		type: fsify.FILE,
+		name: 'filename',
+		contents: 'data'
+	}
+]
+```
+
+### Directory
+
+A directory must have the `type` of a directory and a `name`. It can also contain another nested structure in its `contents` and a `mode`.
+
+```js
+{
+	type: fsify.DIRECTORY,
+	name: 'dirname',
+	mode: 0o777,
+	contents: []
+}
+```
+
+### File
+
+A file must have the `type` of a file and a `name`. It can also contain `contents` (data of the file). `encoding`, `mode` and `flag` will be passed directly to `fs.writeFile`.
+
+```js
+{
+	type: fsify.FILE,
+	name: 'filename',
+	contents: 'data',
+	encoding: 'utf8',
+	mode: 0o666,
+	flag: 'w'
+}
+```

@@ -4,7 +4,7 @@
   "authors": [
     "Tobias Reich <tobias@electerious.com>"
   ],
-  "description": "Convert an object into a persistent or temporary directory structure.",
+  "description": "Convert an array of objects into a persistent or temporary directory structure.",
   "main": "src/index.js",
   "keywords": [
     "fs",
