@@ -40,11 +40,29 @@ describe('index()', function() {
 
 	})
 
-	it('should reject when structure directory name points to the current directory', function() {
+	it('should reject when directory name points to the current directory', function() {
 
 		const structure = [
 			{
 				type: index.DIRECTORY,
+				name: '.'
+			}
+		]
+
+		return index(structure).catch((err) => {
+
+			assert.isNotNull(err)
+			assert.isDefined(err)
+
+		})
+
+	})
+
+	it('should reject when file name points to the current directory', function() {
+
+		const structure = [
+			{
+				type: index.FILE,
 				name: '.'
 			}
 		]
