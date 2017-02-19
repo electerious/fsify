@@ -17,7 +17,7 @@ module.exports = function(entry, cwd, parseStructure) {
 
 		entry = Object.assign({}, entry)
 
-		const { type, name, contents, isDirectory, isFile } = get(entry)
+		const { name, contents, isDirectory, isFile } = get(entry)
 
 		const absolutePath = entry.name = path.join(cwd, name)
 

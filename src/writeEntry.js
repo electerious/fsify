@@ -15,7 +15,7 @@ module.exports = function(entry, writeStructure) {
 
 	return new Promise((resolve, reject) => {
 
-		const { type, name, contents, encoding, mode, flag, isDirectory, isFile } = get(entry)
+		const { name, contents, encoding, mode, flag, isDirectory, isFile } = get(entry)
 
 		if (isDirectory===true) {
 
