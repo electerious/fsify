@@ -12,35 +12,49 @@ const randomString = () => crypto.randomBytes(20).toString('hex')
 
 describe('index()', function() {
 
+	it('should return a function', function() {
+
+		assert.isFunction(index())
+
+	})
+
 	it('should reject when structure is not an array', function() {
 
-		return index({}).catch((err) => {
+		const instance = index()
 
-			assert.isNotNull(err)
-			assert.isDefined(err)
+		return instance({}).catch((err) => {
+
+			assert.strictEqual(`'structure' must be an array`, err.message)
 
 		})
 
 	})
 
-	it('should reject when opts is not an object', function() {
+	it('should throw when opts is not an object', function() {
 
-		return index([], []).catch((err) => {
+		assert.throws(() => {
 
-			assert.isNotNull(err)
-			assert.isDefined(err)
+			const instance = index([])
 
-		})
+		}, `'opts' must be an object`)
 
 	})
 
 	it('should do nothing when called without arguments', function() {
 
-		return index()
+		const instance = index()
+
+		return instance()
 
 	})
 
 	it('should reject when directory name points to the current directory', function() {
+
+		const opts = {
+			persistent: false
+		}
+
+		const instance = index(opts)
 
 		const structure = [
 			{
@@ -49,16 +63,67 @@ describe('index()', function() {
 			}
 		]
 
-		return index(structure).catch((err) => {
+		return instance(structure).then(assert.fail, (err) => {
 
-			assert.isNotNull(err)
-			assert.isDefined(err)
+			assert.strictEqual(`Entry name points to the same path as the surrounding structure`, err.message)
+
+		})
+
+	})
+
+	it('should reject when directory name resolves to the current directory', function() {
+
+		const opts = {
+			persistent: false
+		}
+
+		const instance = index(opts)
+
+		const structure = [
+			{
+				type: index.DIRECTORY,
+				name: './dirname/../'
+			}
+		]
+
+		return instance(structure).then(assert.fail, (err) => {
+
+			assert.strictEqual(`Entry name points to the same path as the surrounding structure`, err.message)
+
+		})
+
+	})
+
+	it('should reject when directory is outside cwd', function() {
+
+		const opts = {
+			persistent: false
+		}
+
+		const instance = index(opts)
+
+		const structure = [
+			{
+				type: index.DIRECTORY,
+				name: '../'
+			}
+		]
+
+		return instance(structure).then(assert.fail, (err) => {
+
+			assert.strictEqual(`Entry name points to a path outside the cwd`, err.message)
 
 		})
 
 	})
 
 	it('should reject when file name points to the current directory', function() {
+
+		const opts = {
+			persistent: false
+		}
+
+		const instance = index(opts)
 
 		const structure = [
 			{
@@ -67,16 +132,21 @@ describe('index()', function() {
 			}
 		]
 
-		return index(structure).catch((err) => {
+		return instance(structure).then(assert.fail, (err) => {
 
-			assert.isNotNull(err)
-			assert.isDefined(err)
+			assert.strictEqual(`Entry name points to the same path as the surrounding structure`, err.message)
 
 		})
 
 	})
 
 	it('should write a file with contents', function() {
+
+		const opts = {
+			persistent: false
+		}
+
+		const instance = index(opts)
 
 		const structure = [
 			{
@@ -86,7 +156,7 @@ describe('index()', function() {
 			}
 		]
 
-		return index(structure).then((_structure) => {
+		return instance(structure).then((_structure) => {
 
 			return pify(fs.readFile)(_structure[0].name, 'utf8')
 
@@ -99,6 +169,12 @@ describe('index()', function() {
 	})
 
 	it('should return an array where each entry is an absolute path', function() {
+
+		const opts = {
+			persistent: false
+		}
+
+		const instance = index(opts)
 
 		const structure = [
 			{
@@ -117,7 +193,7 @@ describe('index()', function() {
 			}
 		]
 
-		return index(structure).then((_structure) => {
+		return instance(structure).then((_structure) => {
 
 			assert.isArray(_structure)
 			assert.isTrue(path.isAbsolute(_structure[0].name))
@@ -130,6 +206,12 @@ describe('index()', function() {
 
 	it('should use the process cwd as its cwd', function() {
 
+		const opts = {
+			persistent: false
+		}
+
+		const instance = index(opts)
+
 		const structure = [
 			{
 				type: index.FILE,
@@ -137,7 +219,7 @@ describe('index()', function() {
 			}
 		]
 
-		return index(structure).then((_structure) => {
+		return instance(structure).then((_structure) => {
 
 			assert.strictEqual(path.resolve(process.cwd(), structure[0].name), _structure[0].name)
 
@@ -147,6 +229,13 @@ describe('index()', function() {
 
 	it('should use a custom relative cwd as its cwd', function() {
 
+		const opts = {
+			cwd: './test',
+			persistent: false
+		}
+
+		const instance = index(opts)
+
 		const structure = [
 			{
 				type: index.FILE,
@@ -154,13 +243,9 @@ describe('index()', function() {
 			}
 		]
 
-		const opts = {
-			cwd: './test'
-		}
+		return instance(structure).then((_structure) => {
 
-		return index(structure, opts).then((_structure) => {
-
-			assert.strictEqual(path.resolve(process.cwd(), cwd, structure[0].name), _structure[0].name)
+			assert.strictEqual(path.resolve(process.cwd(), opts.cwd, structure[0].name), _structure[0].name)
 
 		})
 
@@ -168,6 +253,14 @@ describe('index()', function() {
 
 	it('should use a custom absolute cwd as its cwd', function() {
 
+		const opts = {
+			cwd: os.tmpdir(),
+			persistent: false,
+			force: true
+		}
+
+		const instance = index(opts)
+
 		const structure = [
 			{
 				type: index.FILE,
@@ -175,13 +268,69 @@ describe('index()', function() {
 			}
 		]
 
+		return instance(structure).then((_structure) => {
+
+			assert.strictEqual(path.resolve(process.cwd(), opts.cwd, structure[0].name), _structure[0].name)
+
+		})
+
+	})
+
+	it('should cleanup non-persistent files when cleanup triggered manually', function() {
+
 		const opts = {
-			cwd: os.tmpdir()
+			persistent: false
 		}
 
-		return index(structure, opts).then((_structure) => {
+		const instance = index(opts)
 
-			assert.strictEqual(path.resolve(process.cwd(), cwd, structure[0].name), _structure[0].name)
+		const structure = [
+			{
+				type: index.FILE,
+				name: randomString()
+			}
+		]
+
+		return instance(structure).then((_structure) => {
+
+			return instance.cleanup()
+
+		}).then((deletedEntries) => {
+
+			assert.strictEqual(1, deletedEntries.length)
+
+		})
+
+	})
+
+	it('should not cleanup persistent files when cleanup triggered manually', function() {
+
+		const opts = {
+			persistent: true
+		}
+
+		const instance = index(opts)
+
+		const structure = [
+			{
+				type: index.FILE,
+				name: randomString()
+			}
+		]
+
+		return instance(structure).then((_structure) => {
+
+			return {
+				_structure: _structure,
+				deletedEntries: instance.cleanup()
+			}
+
+		}).then(({ _structure, deletedEntries }) => {
+
+			assert.strictEqual(0, deletedEntries.length)
+
+			// Manual cleanup
+			return pify(fs.unlink)(_structure[0].name)
 
 		})
 
