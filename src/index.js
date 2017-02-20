@@ -48,7 +48,7 @@ module.exports = function(opts = {}) {
 
 		const entriesToDelete = bin()
 
-		return cleanup(entriesToDelete)
+		return cleanup(entriesToDelete, opts.force)
 
 	}
 
@@ -66,7 +66,8 @@ module.exports = function(opts = {}) {
 
 	opts = Object.assign({
 		cwd        : process.cwd(),
-		persistent : true
+		persistent : true,
+		force      : false
 	}, opts)
 
 	// Support relative and absolute paths
