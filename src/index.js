@@ -1,9 +1,31 @@
 'use strict'
 
 const path           = require('path')
+const once           = require('once')
 const isPlainObj     = require('is-plain-obj')
+const bin            = require('./bin')()
 const parseStructure = require('./parseStructure')
 const writeStructure = require('./writeStructure')
+const binStructure   = require('./binStructure')
+const cleanup        = require('./cleanup')
+
+/**
+ * Adds a cleanup listener to the current process.
+ * Function only executes once.
+ * @public
+ * @param {Function} bin - A function that holds all non-persistent entries.
+ */
+const addCleanupListener = once(function(bin) {
+
+	process.addListener('exit', () => {
+
+		const entriesToDelete = bin()
+
+		cleanup(entriesToDelete)
+
+	})
+
+})
 
 /**
  * Converts an object into a persistent or temporary directory structure.
@@ -25,14 +47,19 @@ module.exports = function(structure = [], opts = {}) {
 		}
 
 		opts = Object.assign({
-			cwd: process.cwd()
+			cwd        : process.cwd(),
+			persistent : true
 		}, opts)
 
 		// Support relative and absolute paths
 		opts.cwd = path.resolve(process.cwd(), opts.cwd)
 
+		// Add cleanup listener when files shouldn't be persistent
+		if (opts.persistent===false) addCleanupListener(bin)
+
 		parseStructure(structure, opts.cwd)
 			.then((parsedStructure) => writeStructure(parsedStructure))
+			.then((parsedStructure) => binStructure(parsedStructure, bin, opts.persistent))
 			.then(resolve, reject)
 
 	})
