@@ -3,7 +3,7 @@
 const assert = require('chai').assert
 const bin    = require('./../src/bin')
 
-describe.only('bin()', function() {
+describe('bin()', function() {
 
 	it('should return a function', function() {
 
