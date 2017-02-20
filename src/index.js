@@ -3,70 +3,79 @@
 const path           = require('path')
 const once           = require('once')
 const isPlainObj     = require('is-plain-obj')
-const bin            = require('./bin')()
 const parseStructure = require('./parseStructure')
 const writeStructure = require('./writeStructure')
 const binStructure   = require('./binStructure')
 const cleanup        = require('./cleanup')
 
 /**
- * Adds a cleanup listener to the current process.
- * Function only executes once.
- */
-const addCleanupListener = once(function() {
-
-	process.addListener('exit', module.exports.cleanup)
-
-})
-
-/**
- * Converts an object into a persistent or temporary directory structure.
+ * Creates a new instance of fsify. Each instance has its own bin to make testing easier.
  * @public
- * @param {?Array} structure - Array of objects containing information about a directory or file.
- * @param {?Object} opts - Optional options.
- * @returns {Promise} Returns the following properties if resolved: {Array}.
+ * @param {?Object} opts - Options.
+ * @returns {Function}
  */
-module.exports = function(structure = [], opts = {}) {
+module.exports = function(opts = {}) {
 
-	return new Promise((resolve, reject) => {
+	const bin = require('./bin')()
 
-		if (Array.isArray(structure)===false) {
-			throw new Error(`'structure' must be an array`)
-		}
+	/**
+	 * Converts an object into a persistent or temporary directory structure.
+	 * @param {?Array} structure - Array of objects containing information about a directory or file.
+	 * @returns {Promise} Returns the following properties if resolved: {Array}.
+	 */
+	const main = function(structure = []) {
 
-		if (isPlainObj(opts)===false && opts!=null) {
-			throw new Error(`'opts' must be an object, null or undefined`)
-		}
+		return new Promise((resolve, reject) => {
 
-		opts = Object.assign({
-			cwd        : process.cwd(),
-			persistent : true
-		}, opts)
+			if (Array.isArray(structure)===false) {
+				throw new Error(`'structure' must be an array`)
+			}
 
-		// Support relative and absolute paths
-		opts.cwd = path.resolve(process.cwd(), opts.cwd)
+			parseStructure(structure, opts.cwd)
+				.then((parsedStructure) => writeStructure(parsedStructure))
+				.then((parsedStructure) => binStructure(parsedStructure, bin, opts.persistent))
+				.then(resolve, reject)
 
-		// Add cleanup listener when files shouldn't be persistent
-		if (opts.persistent===false) addCleanupListener()
+		})
 
-		parseStructure(structure, opts.cwd)
-			.then((parsedStructure) => writeStructure(parsedStructure))
-			.then((parsedStructure) => binStructure(parsedStructure, bin, opts.persistent))
-			.then(resolve, reject)
+	}
 
-	})
+	/**
+	 * Triggers a cleanup.
+	 * @returns {Array} deletedEntries - Deleted directories and files.
+	 */
+	main.cleanup = function() {
 
-}
+		const entriesToDelete = bin()
 
-/**
- * Triggers a cleanup.
- * @public
- */
-module.exports.cleanup = function() {
+		return cleanup(entriesToDelete)
 
-	const entriesToDelete = bin()
+	}
 
-	cleanup(entriesToDelete)
+	/**
+	 * Constants for the structure.
+	 * We don't use symbols for the constants as it should still be possible
+	 * to copy, paste and use the JSON output of `tree`.
+	 */
+	main.DIRECTORY = module.exports.DIRECTORY
+	main.FILE      = module.exports.FILE
+
+	if (isPlainObj(opts)===false) {
+		throw new Error(`'opts' must be an object`)
+	}
+
+	opts = Object.assign({
+		cwd        : process.cwd(),
+		persistent : true
+	}, opts)
+
+	// Support relative and absolute paths
+	opts.cwd = path.resolve(process.cwd(), opts.cwd)
+
+	// Add cleanup listener when files shouldn't be persistent
+	if (opts.persistent===false) process.addListener('exit', main.cleanup)
+
+	return main
 
 }
 
