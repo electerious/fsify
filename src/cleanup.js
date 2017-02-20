@@ -3,12 +3,13 @@
 const del = require('del')
 
 /**
- * Tries to delete files and folders, but won't throw an error when something fails.
+ * Tries to delete directories and files, but won't throw an error when something fails.
  * @public
- * @param {?Array} entriesToDelete - Files and folders to delete.
+ * @param {?Array} entriesToDelete - Directories and files to delete.
+ * @returns {Array} deletedEntries - Deleted directories and files.
  */
 module.exports = function(entriesToDelete = []) {
 
-	del.sync(entriesToDelete)
+	return del.sync(entriesToDelete)
 
 }
