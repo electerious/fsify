@@ -12,18 +12,10 @@ const cleanup        = require('./cleanup')
 /**
  * Adds a cleanup listener to the current process.
  * Function only executes once.
- * @public
- * @param {Function} bin - A function that holds all non-persistent entries.
  */
-const addCleanupListener = once(function(bin) {
+const addCleanupListener = once(function() {
 
-	process.addListener('exit', () => {
-
-		const entriesToDelete = bin()
-
-		cleanup(entriesToDelete)
-
-	})
+	process.addListener('exit', module.exports.cleanup)
 
 })
 
@@ -55,7 +47,7 @@ module.exports = function(structure = [], opts = {}) {
 		opts.cwd = path.resolve(process.cwd(), opts.cwd)
 
 		// Add cleanup listener when files shouldn't be persistent
-		if (opts.persistent===false) addCleanupListener(bin)
+		if (opts.persistent===false) addCleanupListener()
 
 		parseStructure(structure, opts.cwd)
 			.then((parsedStructure) => writeStructure(parsedStructure))
@@ -63,6 +55,18 @@ module.exports = function(structure = [], opts = {}) {
 			.then(resolve, reject)
 
 	})
+
+}
+
+/**
+ * Triggers a cleanup.
+ * @public
+ */
+module.exports.cleanup = function() {
+
+	const entriesToDelete = bin()
+
+	cleanup(entriesToDelete)
 
 }
 
