@@ -154,9 +154,11 @@ describe('index()', function() {
 			}
 		]
 
-		const cwd = './test'
+		const opts = {
+			cwd: './test'
+		}
 
-		return index(structure, { cwd }).then((_structure) => {
+		return index(structure, opts).then((_structure) => {
 
 			assert.strictEqual(path.resolve(process.cwd(), cwd, structure[0].name), _structure[0].name)
 
@@ -173,9 +175,11 @@ describe('index()', function() {
 			}
 		]
 
-		const cwd = os.tmpdir()
+		const opts = {
+			cwd: os.tmpdir()
+		}
 
-		return index(structure, { cwd }).then((_structure) => {
+		return index(structure, opts).then((_structure) => {
 
 			assert.strictEqual(path.resolve(process.cwd(), cwd, structure[0].name), _structure[0].name)
 
