@@ -4,6 +4,27 @@
 
 Convert an array of objects into a persistent or temporary directory structure.
 
+## Contents
+
+- [Description](#description)
+- [Install](#install)
+- [Usage](#usage)
+	- [Structure with content](#structure-with-content)
+	- [Deeply nested structure](#deeply-nested-structure)
+	- [Temporary file in existing directory](#temporary-file-in-existing-directory)
+	- [Structure from `tree -J`](#structure-from-tree--J)
+- [API](#api)
+	- [Usage](#usage)
+	- [Parameters](#parameters)
+	- [Returns](#returns)
+- [Instance API](#instance-api)
+	- [Usage](#usage)
+	- [Parameters](#parameters)
+	- [Returns](#returns)
+- [Structure](#structure)
+	- [Directory](#directory)
+	- [File](#file)
+
 ## Description
 
 `fsify` creates a persistent or temporary directory structure from an array of objects. It's like the opposite of the Linux and Unix `tree` command.
@@ -26,7 +47,7 @@ npm install fsify
 ```
 
 ```js
-const fsify = require('fsify')
+const fsify = require('fsify')()
 
 const structure = [
 	{
@@ -62,7 +83,7 @@ fsify(structure)
 ```
 
 ```js
-const fsify = require('fsify')
+const fsify = require('fsify')()
 
 const structure = [
 	{
@@ -88,7 +109,7 @@ fsify(structure)
 	.catch((err) => console.error(err))
 ```
 
-### File in existing directory
+### Temporary file in existing directory
 
 ```
 dirname/
@@ -96,7 +117,10 @@ dirname/
 ```
 
 ```js
-const fsify = require('fsify')
+const fsify = require('fsify')({
+	cwd: 'dirname/',
+	persistent: false
+})
 
 const structure = [
 	{
@@ -105,11 +129,7 @@ const structure = [
 	}
 ]
 
-const opts = {
-	cwd: 'dirname/'
-}
-
-fsify(structure, opts)
+fsify(structure)
 	.then((structure) => console.log(structure))
 	.catch((err) => console.error(err))
 ```
@@ -124,7 +144,7 @@ tree -J > tree.json
 
 ```js
 const fs    = require('fs')
-const fsify = require('fsify')
+const fsify = require('fsify')()
 
 const structure = fs.readFileSync('tree.json', 'utf8')
 
@@ -135,15 +155,55 @@ fsify(structure)
 
 ## API
 
+### Usage
+
+```js
+const fsify = require('fsify')()
+```
+
+```js
+const fsify = require('fsify')({
+	cwd: process.cwd(),
+	persistent: true,
+	force: false
+})
+```
+
 ### Parameters
 
-- `structure` `{Array}` Array of objects containing information about a directory or file.
 - `opts` `{?Object}` Options.
 	- `cwd` `{?String}` - Custom relative or absolute path. Defaults to `process.cwd()`.
+	- `persistent` `{?Boolean}` - Keep directories and files even when the process exists. Defaults to `true`.
+	- `force` `{?Boolean}` - Allow deleting the current working directory and outside.
 
 ### Returns
 
-- `structure` `Array` Equal to the input structure, but parsed and with a absolute path as the name.
+- `instance` `{Function}({?Array})` [fsify instance](#instance-api).
+
+## Instance API
+
+### Usage
+
+```js
+const structure = [
+	{
+		type: fsify.FILE,
+		name: 'filename'
+	}
+]
+
+fsify(structure)
+	.then((structure) => console.log(structure))
+	.catch((err) => console.error(err))
+```
+
+### Parameters
+
+- `structure` `{?Array}` Array of objects containing information about a directory or file.
+
+### Returns
+
+- `{Promise}({Array})` A promise that resolves a structure. Equal to the input structure, but parsed and with a absolute path as the name.
 
 ## Structure
 
