@@ -1,7 +1,8 @@
 'use strict'
 
-const path = require('path')
-const get  = require('./get')
+const path         = require('path')
+const isPathInside = require('is-path-inside')
+const get          = require('./get')
 
 /**
  * Parses an entry (directory or file).
@@ -24,6 +25,10 @@ module.exports = function(entry, cwd, parseStructure) {
 
 		if (absolutePath===cwd) {
 			throw new Error(`Entry name points to the same path as the surrounding structure`)
+		}
+
+		if (isPathInside(absolutePath, cwd)===false) {
+			throw new Error(`Entry name points to a path outside the cwd`)
 		}
 
 		if (isDirectory===true) {
