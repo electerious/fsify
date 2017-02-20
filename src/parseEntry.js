@@ -19,7 +19,8 @@ module.exports = function(entry, cwd, parseStructure) {
 
 		const { name, contents, isDirectory, isFile } = get(entry)
 
-		const absolutePath = entry.name = path.join(cwd, name)
+		// Resolve join to get rid of a leading slash that might occur.
+		const absolutePath = entry.name = path.resolve(path.join(cwd, name))
 
 		if (absolutePath===cwd) {
 			throw new Error(`Entry name points to the same path as the surrounding structure`)
