@@ -63,7 +63,11 @@ describe('index()', function() {
 			}
 		]
 
-		return instance(structure).then(assert.fail, (err) => {
+		return instance(structure).then(() => {
+
+			throw new Error('Returned without error')
+
+		}, (err) => {
 
 			assert.strictEqual(`Entry name points to the same path as the surrounding structure`, err.message)
 
@@ -86,7 +90,11 @@ describe('index()', function() {
 			}
 		]
 
-		return instance(structure).then(assert.fail, (err) => {
+		return instance(structure).then(() => {
+
+			throw new Error('Returned without error')
+
+		}, (err) => {
 
 			assert.strictEqual(`Entry name points to the same path as the surrounding structure`, err.message)
 
@@ -109,7 +117,11 @@ describe('index()', function() {
 			}
 		]
 
-		return instance(structure).then(assert.fail, (err) => {
+		return instance(structure).then(() => {
+
+			throw new Error('Returned without error')
+
+		}, (err) => {
 
 			assert.strictEqual(`Entry name points to a path outside the cwd`, err.message)
 
@@ -132,7 +144,11 @@ describe('index()', function() {
 			}
 		]
 
-		return instance(structure).then(assert.fail, (err) => {
+		return instance(structure).then(() => {
+
+			throw new Error('Returned without error')
+
+		}, (err) => {
 
 			assert.strictEqual(`Entry name points to the same path as the surrounding structure`, err.message)
 
