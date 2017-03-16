@@ -251,23 +251,16 @@ describe('index()', function() {
 
 		const instance = index(opts)
 
-		const structureOne = [
+		const structure = [
 			{
 				type: index.DIRECTORY,
 				name: randomString()
 			}
 		]
 
-		const structureTwo = [
-			{
-				type: index.DIRECTORY,
-				name: structureOne[0].name
-			}
-		]
+		return instance(structure).then((_structure) => {
 
-		return instance(structureOne).then((_structureOne) => {
-
-			return instance(structureTwo)
+			return instance(structure)
 
 		})
 
