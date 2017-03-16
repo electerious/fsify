@@ -243,6 +243,36 @@ describe('index()', function() {
 
 	})
 
+	it('should reuse an existing directory', function() {
+
+		const opts = {
+			persistent: false
+		}
+
+		const instance = index(opts)
+
+		const structureOne = [
+			{
+				type: index.DIRECTORY,
+				name: randomString()
+			}
+		]
+
+		const structureTwo = [
+			{
+				type: index.DIRECTORY,
+				name: structureOne[0].name
+			}
+		]
+
+		return instance(structureOne).then((_structureOne) => {
+
+			return instance(structureTwo)
+
+		})
+
+	})
+
 	it('should use a custom relative cwd as its cwd', function() {
 
 		const opts = {
