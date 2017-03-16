@@ -71,7 +71,7 @@ module.exports = function(opts = {}) {
 	}, opts)
 
 	// Support relative and absolute paths
-	opts.cwd = path.resolve(process.cwd(), opts.cwd)
+	opts.cwd = path.resolve(opts.cwd)
 
 	// Add cleanup listener when files shouldn't be persistent
 	if (opts.persistent===false) process.addListener('exit', main.cleanup)

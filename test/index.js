@@ -237,7 +237,7 @@ describe('index()', function() {
 
 		return instance(structure).then((_structure) => {
 
-			assert.strictEqual(path.resolve(process.cwd(), structure[0].name), _structure[0].name)
+			assert.strictEqual(path.resolve(structure[0].name), _structure[0].name)
 
 		})
 
@@ -261,7 +261,7 @@ describe('index()', function() {
 
 		return instance(structure).then((_structure) => {
 
-			assert.strictEqual(path.resolve(process.cwd(), opts.cwd, structure[0].name), _structure[0].name)
+			assert.strictEqual(path.resolve(opts.cwd, structure[0].name), _structure[0].name)
 
 		})
 
@@ -286,7 +286,7 @@ describe('index()', function() {
 
 		return instance(structure).then((_structure) => {
 
-			assert.strictEqual(path.resolve(process.cwd(), opts.cwd, structure[0].name), _structure[0].name)
+			assert.strictEqual(path.resolve(opts.cwd, structure[0].name), _structure[0].name)
 
 		})
 
