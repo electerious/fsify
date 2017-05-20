@@ -49,11 +49,7 @@ describe('index()', function() {
 
 	it('should reject when directory name points to the current directory', function() {
 
-		const opts = {
-			persistent: false
-		}
-
-		const instance = index(opts)
+		const instance = index()
 
 		const structure = [
 			{
@@ -76,11 +72,7 @@ describe('index()', function() {
 
 	it('should reject when directory name resolves to the current directory', function() {
 
-		const opts = {
-			persistent: false
-		}
-
-		const instance = index(opts)
+		const instance = index()
 
 		const structure = [
 			{
@@ -103,11 +95,7 @@ describe('index()', function() {
 
 	it('should reject when directory is outside cwd', function() {
 
-		const opts = {
-			persistent: false
-		}
-
-		const instance = index(opts)
+		const instance = index()
 
 		const structure = [
 			{
@@ -130,11 +118,7 @@ describe('index()', function() {
 
 	it('should reject when file name points to the current directory', function() {
 
-		const opts = {
-			persistent: false
-		}
-
-		const instance = index(opts)
+		const instance = index()
 
 		const structure = [
 			{
@@ -150,6 +134,54 @@ describe('index()', function() {
 		}, (err) => {
 
 			assert.strictEqual(`Entry name points to the same path as the surrounding structure`, err.message)
+
+		})
+
+	})
+
+	it('should reject when a directory has a string as its contents', function() {
+
+		const instance = index()
+
+		const structure = [
+			{
+				type: index.DIRECTORY,
+				name: uuid(),
+				contents: uuid()
+			}
+		]
+
+		return instance(structure).then(() => {
+
+			throw new Error('Returned without error')
+
+		}, (err) => {
+
+			assert.strictEqual(`Entry type is 'directory' and 'contents' must be an array, null or undefined`, err.message)
+
+		})
+
+	})
+
+	it('should reject when a file has an array as its contents', function() {
+
+		const instance = index()
+
+		const structure = [
+			{
+				type: index.FILE,
+				name: uuid(),
+				contents: []
+			}
+		]
+
+		return instance(structure).then(() => {
+
+			throw new Error('Returned without error')
+
+		}, (err) => {
+
+			assert.strictEqual(`Entry type is 'file', but 'contents' is an array and should be a string or a buffer`, err.message)
 
 		})
 
@@ -178,6 +210,29 @@ describe('index()', function() {
 		}).then((data) => {
 
 			assert.strictEqual(data, structure[0].contents)
+
+		})
+
+	})
+
+	it('should write a directory without contents', function() {
+
+		const opts = {
+			persistent: false
+		}
+
+		const instance = index(opts)
+
+		const structure = [
+			{
+				type: index.DIRECTORY,
+				name: uuid()
+			}
+		]
+
+		return instance(structure).then((_structure) => {
+
+			return pify(fs.readdir)(_structure[0].name)
 
 		})
 
@@ -343,11 +398,7 @@ describe('index()', function() {
 
 	it('should not cleanup persistent files when cleanup triggered manually', function() {
 
-		const opts = {
-			persistent: true
-		}
-
-		const instance = index(opts)
+		const instance = index()
 
 		const structure = [
 			{
