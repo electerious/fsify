@@ -61,7 +61,7 @@ module.exports = function(opts = {}) {
 	main.FILE      = module.exports.FILE
 
 	if (isPlainObj(opts)===false) {
-		throw new Error(`'opts' must be an object`)
+		throw new Error(`'opts' must be an object, null or undefined`)
 	}
 
 	opts = Object.assign({

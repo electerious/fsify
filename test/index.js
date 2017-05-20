@@ -35,7 +35,7 @@ describe('index()', function() {
 
 			const instance = index([])
 
-		}, `'opts' must be an object`)
+		}, `'opts' must be an object, null or undefined`)
 
 	})
 
