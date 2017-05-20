@@ -33,6 +33,10 @@ module.exports = function(entry, cwd, parseStructure) {
 
 		if (isDirectory===true) {
 
+			if (contents!=null && Array.isArray(contents)===false) {
+				throw new Error(`Entry type is 'directory' and 'contents' must be an array, null or undefined`)
+			}
+
 			return parseStructure(contents, absolutePath)
 				.then((contens) => entry.contents = contens)
 				.then(() => entry)
@@ -41,6 +45,10 @@ module.exports = function(entry, cwd, parseStructure) {
 		}
 
 		if (isFile===true) {
+
+			if (Array.isArray(contents)===true) {
+				throw new Error(`Entry type is 'file', but 'contents' is an array and should be a string or a buffer`)
+			}
 
 			return resolve(entry)
 
