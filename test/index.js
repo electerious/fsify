@@ -6,9 +6,8 @@ const path   = require('path')
 const fs     = require('fs')
 const pify   = require('pify')
 const assert = require('chai').assert
+const uuid   = require('uuid/v4')
 const index  = require('./../src/index')
-
-const randomString = () => crypto.randomBytes(20).toString('hex')
 
 describe('index()', function() {
 
@@ -167,8 +166,8 @@ describe('index()', function() {
 		const structure = [
 			{
 				type: index.FILE,
-				name: randomString(),
-				contents: randomString()
+				name: uuid(),
+				contents: uuid()
 			}
 		]
 
@@ -195,15 +194,15 @@ describe('index()', function() {
 		const structure = [
 			{
 				type: index.FILE,
-				name: randomString()
+				name: uuid()
 			},
 			{
 				type: index.DIRECTORY,
-				name: randomString(),
+				name: uuid(),
 				contents: [
 					{
 						type: index.FILE,
-						name: randomString()
+						name: uuid()
 					}
 				]
 			}
@@ -231,7 +230,7 @@ describe('index()', function() {
 		const structure = [
 			{
 				type: index.FILE,
-				name: randomString()
+				name: uuid()
 			}
 		]
 
@@ -254,7 +253,7 @@ describe('index()', function() {
 		const structure = [
 			{
 				type: index.DIRECTORY,
-				name: randomString()
+				name: uuid()
 			}
 		]
 
@@ -278,7 +277,7 @@ describe('index()', function() {
 		const structure = [
 			{
 				type: index.FILE,
-				name: randomString()
+				name: uuid()
 			}
 		]
 
@@ -303,7 +302,7 @@ describe('index()', function() {
 		const structure = [
 			{
 				type: index.FILE,
-				name: randomString()
+				name: uuid()
 			}
 		]
 
@@ -326,7 +325,7 @@ describe('index()', function() {
 		const structure = [
 			{
 				type: index.FILE,
-				name: randomString()
+				name: uuid()
 			}
 		]
 
@@ -353,7 +352,7 @@ describe('index()', function() {
 		const structure = [
 			{
 				type: index.FILE,
-				name: randomString()
+				name: uuid()
 			}
 		]
 
