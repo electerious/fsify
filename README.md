@@ -172,7 +172,7 @@ const fsify = require('fsify')({
 
 ### Returns
 
-- `instance` `{Function}({?Array})` [fsify instance](#instance-api).
+- `{Function}({?Array})` [fsify instance](#instance-api).
 
 ## Instance API
 
