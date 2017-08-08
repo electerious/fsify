@@ -36,17 +36,17 @@
     "prepublish": "npm test"
   },
   "devDependencies": {
-    "chai": "^4.0.2",
+    "chai": "^4.1.1",
     "coveralls": "^2.13.1",
-    "nyc": "^11.0.2",
-    "mocha": "^3.4.1",
-    "uuid": "^3.0.1"
+    "nyc": "^11.1.0",
+    "mocha": "^3.5.0",
+    "uuid": "^3.1.0"
   },
   "dependencies": {
     "del": "^3.0.0",
     "is-path-inside": "^1.0.0",
     "is-plain-obj": "^1.1.0",
     "once": "^1.4.0",
-    "pify": "^2.3.0"
+    "pify": "^3.0.0"
   }
 }
