@@ -15,10 +15,10 @@ describe('bin()', function() {
 
 		const _bin = bin()
 
-		assert.deepEqual([], _bin())
-		assert.deepEqual([ 1 ], _bin(1))
-		assert.deepEqual([ 1, 2 ], _bin(2))
-		assert.deepEqual([ 1, 2, 3, 4 ], _bin(3, 4))
+		assert.deepEqual(_bin(), [])
+		assert.deepEqual(_bin(1), [ 1 ])
+		assert.deepEqual(_bin(2), [ 1, 2 ])
+		assert.deepEqual(_bin(3, 4), [ 1, 2, 3, 4 ])
 
 	})
 

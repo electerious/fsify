@@ -23,7 +23,7 @@ describe('index()', function() {
 
 		return instance({}).catch((err) => {
 
-			assert.strictEqual(`'structure' must be an array`, err.message)
+			assert.strictEqual(err.message, `'structure' must be an array`)
 
 		})
 
@@ -64,7 +64,7 @@ describe('index()', function() {
 
 		}, (err) => {
 
-			assert.strictEqual(`Entry name points to the same path as the surrounding structure`, err.message)
+			assert.strictEqual(err.message, `Entry name points to the same path as the surrounding structure`)
 
 		})
 
@@ -87,7 +87,7 @@ describe('index()', function() {
 
 		}, (err) => {
 
-			assert.strictEqual(`Entry name points to the same path as the surrounding structure`, err.message)
+			assert.strictEqual(err.message, `Entry name points to the same path as the surrounding structure`)
 
 		})
 
@@ -110,7 +110,7 @@ describe('index()', function() {
 
 		}, (err) => {
 
-			assert.strictEqual(`Entry name points to a path outside the cwd`, err.message)
+			assert.strictEqual(err.message, `Entry name points to a path outside the cwd`)
 
 		})
 
@@ -133,7 +133,7 @@ describe('index()', function() {
 
 		}, (err) => {
 
-			assert.strictEqual(`Entry name points to the same path as the surrounding structure`, err.message)
+			assert.strictEqual(err.message, `Entry name points to the same path as the surrounding structure`)
 
 		})
 
@@ -157,7 +157,7 @@ describe('index()', function() {
 
 		}, (err) => {
 
-			assert.strictEqual(`Entry type is 'directory' and 'contents' must be an array, null or undefined`, err.message)
+			assert.strictEqual(err.message, `Entry type is 'directory' and 'contents' must be an array, null or undefined`)
 
 		})
 
@@ -181,7 +181,7 @@ describe('index()', function() {
 
 		}, (err) => {
 
-			assert.strictEqual(`Entry type is 'file', but 'contents' is an array and should be a string or a buffer`, err.message)
+			assert.strictEqual(err.message, `Entry type is 'file', but 'contents' is an array and should be a string or a buffer`)
 
 		})
 
@@ -291,7 +291,7 @@ describe('index()', function() {
 
 		return instance(structure).then((_structure) => {
 
-			assert.strictEqual(path.resolve(structure[0].name), _structure[0].name)
+			assert.strictEqual(_structure[0].name, path.resolve(structure[0].name))
 
 		})
 
@@ -338,7 +338,7 @@ describe('index()', function() {
 
 		return instance(structure).then((_structure) => {
 
-			assert.strictEqual(path.resolve(opts.cwd, structure[0].name), _structure[0].name)
+			assert.strictEqual(_structure[0].name, path.resolve(opts.cwd, structure[0].name))
 
 		})
 
@@ -363,7 +363,7 @@ describe('index()', function() {
 
 		return instance(structure).then((_structure) => {
 
-			assert.strictEqual(path.resolve(opts.cwd, structure[0].name), _structure[0].name)
+			assert.strictEqual(_structure[0].name, path.resolve(opts.cwd, structure[0].name))
 
 		})
 
@@ -390,7 +390,7 @@ describe('index()', function() {
 
 		}).then((deletedEntries) => {
 
-			assert.strictEqual(1, deletedEntries.length)
+			assert.strictEqual(deletedEntries.length, 1)
 
 		})
 
@@ -416,7 +416,7 @@ describe('index()', function() {
 
 		}).then(({ _structure, deletedEntries }) => {
 
-			assert.strictEqual(0, deletedEntries.length)
+			assert.strictEqual(deletedEntries.length, 0)
 
 			// Manual cleanup
 			return pify(fs.unlink)(_structure[0].name)
