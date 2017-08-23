@@ -1,8 +1,8 @@
 'use strict'
 
-const path         = require('path')
+const path = require('path')
 const isPathInside = require('is-path-inside')
-const get          = require('./get')
+const get = require('./get')
 
 /**
  * Parses an entry (directory or file).

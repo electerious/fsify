@@ -1,13 +1,13 @@
 'use strict'
 
-const os     = require('os')
+const os = require('os')
 const crypto = require('crypto')
-const path   = require('path')
-const fs     = require('fs')
-const pify   = require('pify')
+const path = require('path')
+const fs = require('fs')
+const pify = require('pify')
 const assert = require('chai').assert
-const uuid   = require('uuid/v4')
-const index  = require('./../src/index')
+const uuid = require('uuid/v4')
+const index = require('./../src/index')
 
 describe('index()', function() {
 

@@ -137,7 +137,7 @@ tree -J > tree.json
 ```
 
 ```js
-const fs    = require('fs')
+const fs = require('fs')
 const fsify = require('fsify')()
 
 const structure = fs.readFileSync('tree.json', 'utf8')

@@ -1,7 +1,7 @@
 'use strict'
 
 const assert = require('chai').assert
-const get    = require('./../src/get')
+const get = require('./../src/get')
 
 describe('get()', function() {
 

@@ -1,8 +1,8 @@
 'use strict'
 
-const isPlainObj  = require('is-plain-obj')
+const isPlainObj = require('is-plain-obj')
 const isDirectory = require('./isDirectory')
-const isFile      = require('./isFile')
+const isFile = require('./isFile')
 
 /**
  * Parses an entry.
@@ -15,33 +15,28 @@ module.exports = function(entry) {
 		throw new Error(`Each entry of 'structure' must be an object`)
 	}
 
-	const name     = entry.name
-	const type     = entry.type
-	const contents = entry.contents
-	const mode     = entry.mode
-	const encoding = entry.encoding
-	const flag     = entry.flag
+	const { name, type, contents, mode, encoding, flag } = entry
 
 	if (typeof name!=='string') {
 		throw new Error(`Each directory and file must have a 'name'`)
 	}
 
 	const _isDirectory = isDirectory(type)
-	const _isFile      = isFile(type)
+	const _isFile = isFile(type)
 
 	if (_isDirectory===false && _isFile===false) {
 		throw new Error(`Each entry must have a known 'type'`)
 	}
 
 	return {
-		name        : name,
-		type        : type,
-		contents    : contents,
-		mode        : mode,
-		encoding    : encoding,
-		flag        : flag,
-		isDirectory : _isDirectory,
-		isFile      : _isFile
+		name: name,
+		type: type,
+		contents: contents,
+		mode: mode,
+		encoding: encoding,
+		flag: flag,
+		isDirectory: _isDirectory,
+		isFile: _isFile
 	}
 
 }

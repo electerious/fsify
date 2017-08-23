@@ -1,12 +1,12 @@
 'use strict'
 
-const path           = require('path')
-const once           = require('once')
-const isPlainObj     = require('is-plain-obj')
+const path = require('path')
+const once = require('once')
+const isPlainObj = require('is-plain-obj')
 const parseStructure = require('./parseStructure')
 const writeStructure = require('./writeStructure')
-const binStructure   = require('./binStructure')
-const cleanup        = require('./cleanup')
+const binStructure = require('./binStructure')
+const cleanup = require('./cleanup')
 
 /**
  * Creates a new instance of fsify. Each instance has its own bin to make testing easier.
@@ -58,16 +58,16 @@ module.exports = function(opts = {}) {
 	 * to copy, paste and use the JSON output of `tree`.
 	 */
 	main.DIRECTORY = module.exports.DIRECTORY
-	main.FILE      = module.exports.FILE
+	main.FILE = module.exports.FILE
 
 	if (isPlainObj(opts)===false) {
 		throw new Error(`'opts' must be an object, null or undefined`)
 	}
 
 	opts = Object.assign({
-		cwd        : process.cwd(),
-		persistent : true,
-		force      : false
+		cwd: process.cwd(),
+		persistent: true,
+		force: false
 	}, opts)
 
 	// Support relative and absolute paths
@@ -87,4 +87,4 @@ module.exports = function(opts = {}) {
  * @public
  */
 module.exports.DIRECTORY = 'directory'
-module.exports.FILE      = 'file'
+module.exports.FILE = 'file'

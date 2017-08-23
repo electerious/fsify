@@ -1,6 +1,6 @@
 'use strict'
 
-const assert      = require('chai').assert
+const assert = require('chai').assert
 const isDirectory = require('./../src/isDirectory')
 
 describe('get()', function() {

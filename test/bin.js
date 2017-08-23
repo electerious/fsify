@@ -1,7 +1,7 @@
 'use strict'
 
 const assert = require('chai').assert
-const bin    = require('./../src/bin')
+const bin = require('./../src/bin')
 
 describe('bin()', function() {
 

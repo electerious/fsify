@@ -1,8 +1,8 @@
 'use strict'
 
-const get            = require('./get')
+const get = require('./get')
 const writeDirectory = require('./writeDirectory')
-const writeFile      = require('./writeFile')
+const writeFile = require('./writeFile')
 
 /**
  * Writes an entry as directory or file.
