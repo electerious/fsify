@@ -197,7 +197,7 @@ fsify(structure)
 
 ### Returns
 
-- `{Promise}({Array})` A promise that resolves a structure. Equal to the input structure, but parsed and with a absolute path as the name.
+- `{Promise<Array>}` A promise that resolves a structure. Equal to the input structure, but parsed and with a absolute path as the name.
 
 ## Structure
 

@@ -21,7 +21,7 @@ module.exports = function(opts = {}) {
 	/**
 	 * Converts an object into a persistent or temporary directory structure.
 	 * @param {?Array} structure - Array of objects containing information about a directory or file.
-	 * @returns {Promise} Returns the following properties if resolved: {Array}.
+	 * @returns {Promise<Array>} Parsed structure.
 	 */
 	const main = function(structure = []) {
 

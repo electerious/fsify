@@ -10,7 +10,7 @@ const get = require('./get')
  * @param {Object} entry - Objects containing information about a directory or file.
  * @param {String} cwd - Directory to start from.
  * @param {Function} parseStructure - Function that parses an array that represents a directory structure.
- * @returns {Promise} Returns the following properties if resolved: {Object}.
+ * @returns {Promise<Object>} Parsed entry.
  */
 module.exports = function(entry, cwd, parseStructure) {
 

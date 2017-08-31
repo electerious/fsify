@@ -9,7 +9,7 @@ const writeFile = require('./writeFile')
  * @public
  * @param {Object} entry - Objects containing information about a directory or file.
  * @param {Function} writeStructure - Function that converts an array into a directory structure.
- * @returns {Promise} Returns the following properties if resolved: {Object}.
+ * @returns {Promise<Object>} Original entry passed to the function.
  */
 module.exports = function(entry, writeStructure) {
 

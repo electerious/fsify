@@ -7,7 +7,7 @@ const parseEntry = require('./parseEntry')
  * @public
  * @param {?Array} structure - Array of objects containing information about a directory or file.
  * @param {String} cwd - Directory to start from.
- * @returns {Promise} Returns the following properties if resolved: {Array}.
+ * @returns {Promise<Array>} Parsed structure.
  */
 module.exports = function(structure = [], cwd) {
 
