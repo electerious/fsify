@@ -1,7 +1,6 @@
 'use strict'
 
 const os = require('os')
-const crypto = require('crypto')
 const path = require('path')
 const fs = require('fs')
 const pify = require('pify')
@@ -33,7 +32,7 @@ describe('index()', function() {
 
 		assert.throws(() => {
 
-			const instance = index([])
+			index([])
 
 		}, `'opts' must be an object, null or undefined`)
 
@@ -312,7 +311,7 @@ describe('index()', function() {
 			}
 		]
 
-		return instance(structure).then((_structure) => {
+		return instance(structure).then(() => {
 
 			return instance(structure)
 
@@ -384,7 +383,7 @@ describe('index()', function() {
 			}
 		]
 
-		return instance(structure).then((_structure) => {
+		return instance(structure).then(() => {
 
 			return instance.cleanup()
 

@@ -12,7 +12,7 @@ const flatten = require('./flatten')
  */
 module.exports = function(structure = [], bin, persistent) {
 
-	return new Promise((resolve, reject) => {
+	return new Promise((resolve) => {
 
 		if (persistent===false) {
 
