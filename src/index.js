@@ -1,7 +1,6 @@
 'use strict'
 
 const path = require('path')
-const once = require('once')
 const isPlainObj = require('is-plain-obj')
 const parseStructure = require('./parseStructure')
 const writeStructure = require('./writeStructure')
