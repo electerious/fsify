@@ -1,9 +1,9 @@
 'use strict'
 
+const util = require('util')
 const os = require('os')
 const path = require('path')
 const fs = require('fs')
-const pify = require('pify')
 const assert = require('chai').assert
 const uuid = require('uuid/v4')
 const index = require('./../src/index')
@@ -204,7 +204,7 @@ describe('index()', function() {
 
 		return instance(structure).then((_structure) => {
 
-			return pify(fs.readFile)(_structure[0].name, 'utf8')
+			return util.promisify(fs.readFile)(_structure[0].name, 'utf8')
 
 		}).then((data) => {
 
@@ -231,7 +231,7 @@ describe('index()', function() {
 
 		return instance(structure).then((_structure) => {
 
-			return pify(fs.readdir)(_structure[0].name)
+			return util.promisify(fs.readdir)(_structure[0].name)
 
 		})
 
@@ -418,7 +418,7 @@ describe('index()', function() {
 			assert.strictEqual(deletedEntries.length, 0)
 
 			// Manual cleanup
-			return pify(fs.unlink)(_structure[0].name)
+			return util.promisify(fs.unlink)(_structure[0].name)
 
 		})
 
