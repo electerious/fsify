@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "del": "^3.0.0",
-    "is-path-inside": "^1.0.0",
+    "is-path-inside": "^2.0.0",
     "is-plain-obj": "^1.1.0"
   }
 }
