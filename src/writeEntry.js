@@ -17,7 +17,7 @@ module.exports = function(entry, writeStructure) {
 
 		const { name, contents, encoding, mode, flag, isDirectory, isFile } = get(entry)
 
-		if (isDirectory===true) {
+		if (isDirectory === true) {
 
 			return writeDirectory(name, mode)
 				.then(() => writeStructure(contents, name))
@@ -26,7 +26,7 @@ module.exports = function(entry, writeStructure) {
 
 		}
 
-		if (isFile===true) {
+		if (isFile === true) {
 
 			return writeFile(name, contents, encoding, mode, flag)
 				.then(() => entry)

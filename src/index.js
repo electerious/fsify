@@ -26,7 +26,7 @@ module.exports = function(opts = {}) {
 
 		return new Promise((resolve, reject) => {
 
-			if (Array.isArray(structure)===false) {
+			if (Array.isArray(structure) === false) {
 				throw new Error(`'structure' must be an array`)
 			}
 
@@ -59,7 +59,7 @@ module.exports = function(opts = {}) {
 	main.DIRECTORY = module.exports.DIRECTORY
 	main.FILE = module.exports.FILE
 
-	if (isPlainObj(opts)===false) {
+	if (isPlainObj(opts) === false) {
 		throw new Error(`'opts' must be an object, null or undefined`)
 	}
 
@@ -73,7 +73,7 @@ module.exports = function(opts = {}) {
 	opts.cwd = path.resolve(opts.cwd)
 
 	// Add cleanup listener when files shouldn't be persistent
-	if (opts.persistent===false) process.addListener('exit', main.cleanup)
+	if (opts.persistent === false) process.addListener('exit', main.cleanup)
 
 	return main
 
