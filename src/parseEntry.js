@@ -23,17 +23,17 @@ module.exports = function(entry, cwd, parseStructure) {
 		// Resolve join to get rid of a leading slash that might occur.
 		const absolutePath = entry.name = path.resolve(path.join(cwd, name))
 
-		if (absolutePath===cwd) {
+		if (absolutePath === cwd) {
 			throw new Error(`Entry name points to the same path as the surrounding structure`)
 		}
 
-		if (isPathInside(absolutePath, cwd)===false) {
+		if (isPathInside(absolutePath, cwd) === false) {
 			throw new Error(`Entry name points to a path outside the cwd`)
 		}
 
-		if (isDirectory===true) {
+		if (isDirectory === true) {
 
-			if (contents!=null && Array.isArray(contents)===false) {
+			if (contents != null && Array.isArray(contents) === false) {
 				throw new Error(`Entry type is 'directory' and 'contents' must be an array, null or undefined`)
 			}
 
@@ -44,9 +44,9 @@ module.exports = function(entry, cwd, parseStructure) {
 
 		}
 
-		if (isFile===true) {
+		if (isFile === true) {
 
-			if (Array.isArray(contents)===true) {
+			if (Array.isArray(contents) === true) {
 				throw new Error(`Entry type is 'file', but 'contents' is an array and should be a string or a buffer`)
 			}
 

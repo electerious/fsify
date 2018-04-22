@@ -16,7 +16,7 @@ module.exports = function(structure = []) {
 
 		entries = [ ...entries, name ]
 
-		if (isDirectory===true) {
+		if (isDirectory === true) {
 
 			entries = [
 				...entries,

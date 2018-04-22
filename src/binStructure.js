@@ -14,7 +14,7 @@ module.exports = function(structure = [], bin, persistent) {
 
 	return new Promise((resolve) => {
 
-		if (persistent===false) {
+		if (persistent === false) {
 
 			const flattenedStructure = flatten(structure)
 

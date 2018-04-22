@@ -14,6 +14,6 @@ const fs = require('fs')
 module.exports = function(path, mode) {
 
 	return util.promisify(fs.mkdir)(path, mode)
-		.catch((err) => { if (err.code!=='EEXIST') throw err })
+		.catch((err) => { if (err.code !== 'EEXIST') throw err })
 
 }
