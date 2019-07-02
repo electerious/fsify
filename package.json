@@ -42,7 +42,7 @@
     "uuid": "^3.2.1"
   },
   "dependencies": {
-    "del": "^4.0.0",
+    "del": "^5.0.0",
     "is-path-inside": "^2.0.0",
     "is-plain-obj": "^2.0.0"
   }
