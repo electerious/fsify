@@ -1,6 +1,7 @@
 'use strict'
 
 const del = require('del')
+const slash = require('slash')
 
 /**
  * Tries to delete directories and files, but won't throw an error when something fails.
@@ -11,7 +12,11 @@ const del = require('del')
  */
 module.exports = function(entriesToDelete = [], force) {
 
-	return del.sync(entriesToDelete, {
+	// Convert Windows backslash paths to slash paths,
+	// because backward slashes aren't supported in glob pattern.
+	const patternsToDelete = entriesToDelete.map(slash)
+
+	return del.sync(patternsToDelete, {
 		force
 	})
 
