@@ -5,7 +5,7 @@ const os = require('os')
 const path = require('path')
 const fs = require('fs')
 const assert = require('chai').assert
-const uuid = require('uuid/v4')
+const uuid = require('uuid').v4
 const index = require('./../src/index')
 
 describe('index()', function() {
