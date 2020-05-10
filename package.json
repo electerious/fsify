@@ -32,9 +32,11 @@
   ],
   "scripts": {
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "test": "nyc node_modules/mocha/bin/_mocha"
+    "test": "nyc node_modules/mocha/bin/_mocha",
+    "lint": "eslint '{src,test}/**/*.js'"
   },
   "devDependencies": {
+    "@electerious/eslint-config": "^1.3.2",
     "chai": "^4.2.0",
     "coveralls": "^3.1.0",
     "mocha": "^7.1.2",
