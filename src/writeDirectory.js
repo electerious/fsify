@@ -1,7 +1,6 @@
 'use strict'
 
-const util = require('util')
-const fs = require('fs')
+const fs = require('fs').promises
 
 /**
  * Creates a new directory. Subdirectories must exist.
@@ -13,7 +12,7 @@ const fs = require('fs')
  */
 module.exports = function(path, mode) {
 
-	return util.promisify(fs.mkdir)(path, mode)
+	return fs.mkdir(path, mode)
 		.catch((err) => { if (err.code !== 'EEXIST') throw err })
 
 }

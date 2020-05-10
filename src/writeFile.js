@@ -1,7 +1,6 @@
 'use strict'
 
-const util = require('util')
-const fs = require('fs')
+const fs = require('fs').promises
 
 /**
  * Asynchronously writes data to a file, replacing the file if it already exists.
@@ -13,9 +12,9 @@ const fs = require('fs')
  * @param {?String} flag
  * @returns {Promise}
  */
-module.exports = function(path, data, encoding, mode, flag) {
+module.exports = function(path, data = '', encoding, mode, flag) {
 
-	return util.promisify(fs.writeFile)(path, data, {
+	return fs.writeFile(path, data, {
 		encoding,
 		mode,
 		flag
