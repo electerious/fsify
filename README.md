@@ -1,7 +1,5 @@
 # fsify
 
-[![Travis Build Status](https://travis-ci.org/electerious/fsify.svg?branch=master)](https://travis-ci.org/electerious/fsify) [![Coverage Status](https://coveralls.io/repos/github/electerious/fsify/badge.svg?branch=master)](https://coveralls.io/github/electerious/fsify?branch=master) [![Dependencies](https://david-dm.org/electerious/fsify.svg)](https://david-dm.org/electerious/fsify#info=dependencies) [![Greenkeeper badge](https://badges.greenkeeper.io/electerious/fsify.svg)](https://greenkeeper.io/)
-
 Convert an array of objects into a persistent or temporary directory structure.
 
 ## Contents
