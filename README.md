@@ -1,6 +1,6 @@
 # fsify
 
-![Test](https://github.com/electerious/fsify/workflows/Test/badge.svg)
+![Build](https://github.com/electerious/fsify/workflows/Build/badge.svg)
 
 Convert an array of objects into a persistent or temporary directory structure.
 
