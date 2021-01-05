@@ -2,8 +2,6 @@ name: Build
 
 on:
   pull_request:
-    branches:
-      - master
     paths-ignore:
       - '**.md'
   push:
@@ -46,3 +44,24 @@ jobs:
       - run: npm i
 
       - run: npm test
+
+      - run: npm run coveralls
+
+      - name: Parallel Coveralls report
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ github.token }}
+          flag-name: run-${{ matrix.test_number }}
+          parallel: true
+
+  coveralls:
+
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Finished Coveralls report
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ github.token }}
+          parallel-finished: true

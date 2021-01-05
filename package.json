@@ -31,7 +31,7 @@
     "src"
   ],
   "scripts": {
-    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "coveralls": "nyc report --reporter=lcov",
     "test": "nyc node_modules/mocha/bin/_mocha",
     "lint": "eslint '{src,test}/**/*.js'"
   },
