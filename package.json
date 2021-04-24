@@ -51,7 +51,7 @@
     "del": "^6.0.0",
     "is-path-inside": "^3.0.0",
     "is-plain-obj": "^4.0.0",
-    "slash": "^3.0.0"
+    "slash": "^4.0.0"
   },
   "eslintConfig": {
     "root": true,
