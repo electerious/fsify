@@ -36,7 +36,7 @@
     "lint": "eslint '{src,test}/**/*.js'"
   },
   "devDependencies": {
-    "@electerious/eslint-config": "^1.4.0",
+    "@electerious/eslint-config": "^3.0.0",
     "chai": "^4.3.0",
     "eslint": "^7.21.0",
     "eslint-plugin-import": "^2.22.1",
