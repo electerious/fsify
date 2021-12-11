@@ -11,19 +11,13 @@ const flatten = require('./flatten')
  * @returns {Promise<Array>} Original structure passed to the function.
  */
 module.exports = function(structure = [], bin, persistent) {
-
 	return new Promise((resolve) => {
-
 		if (persistent === false) {
-
 			const flattenedStructure = flatten(structure)
 
 			bin(...flattenedStructure)
-
 		}
 
 		resolve(structure)
-
 	})
-
 }

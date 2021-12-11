@@ -14,7 +14,6 @@ const cleanup = require('./cleanup')
  * @returns {Function}
  */
 module.exports = function(options = {}) {
-
 	const bin = require('./bin')()
 
 	/**
@@ -23,9 +22,7 @@ module.exports = function(options = {}) {
 	 * @returns {Promise<Array>} Parsed structure.
 	 */
 	const main = function(structure = []) {
-
 		return new Promise((resolve, reject) => {
-
 			if (Array.isArray(structure) === false) {
 				throw new Error(`'structure' must be an array`)
 			}
@@ -34,9 +31,7 @@ module.exports = function(options = {}) {
 				.then((parsedStructure) => writeStructure(parsedStructure))
 				.then((parsedStructure) => binStructure(parsedStructure, bin, options.persistent))
 				.then(resolve, reject)
-
 		})
-
 	}
 
 	/**
@@ -44,11 +39,9 @@ module.exports = function(options = {}) {
 	 * @returns {Array} deletedEntries - Deleted directories and files.
 	 */
 	main.cleanup = function() {
-
 		const entriesToDelete = bin()
 
 		return cleanup(entriesToDelete, options.force)
-
 	}
 
 	/**
@@ -66,7 +59,7 @@ module.exports = function(options = {}) {
 	options = Object.assign({
 		cwd: process.cwd(),
 		persistent: true,
-		force: false
+		force: false,
 	}, options)
 
 	// Support relative and absolute paths
@@ -76,7 +69,6 @@ module.exports = function(options = {}) {
 	if (options.persistent === false) process.addListener('exit', main.cleanup)
 
 	return main
-
 }
 
 /**

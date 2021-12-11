@@ -9,14 +9,10 @@ const writeEntry = require('./writeEntry')
  * @returns {Promise<Array>} Original structure passed to the function.
  */
 module.exports = function(structure = []) {
-
 	return new Promise((resolve, reject) => {
-
 		const query = structure.map((entry) => writeEntry(entry, module.exports))
 
 		Promise.all(query)
 			.then(resolve, reject)
-
 	})
-
 }

@@ -13,9 +13,7 @@ const get = require('./get')
  * @returns {Promise<Object>} Parsed entry.
  */
 module.exports = function(entry, cwd, parseStructure) {
-
 	return new Promise((resolve, reject) => {
-
 		entry = Object.assign({}, entry)
 
 		const { name, contents, isDirectory, isFile } = get(entry)
@@ -32,7 +30,6 @@ module.exports = function(entry, cwd, parseStructure) {
 		}
 
 		if (isDirectory === true) {
-
 			if (contents != null && Array.isArray(contents) === false) {
 				throw new Error(`Entry type is 'directory' and 'contents' must be an array, null or undefined`)
 			}
@@ -41,21 +38,16 @@ module.exports = function(entry, cwd, parseStructure) {
 				.then((contens) => entry.contents = contens)
 				.then(() => entry)
 				.then(resolve, reject)
-
 		}
 
 		if (isFile === true) {
-
 			if (Array.isArray(contents) === true) {
 				throw new Error(`Entry type is 'file', but 'contents' is an array and should be a string or a buffer`)
 			}
 
 			return resolve(entry)
-
 		}
 
 		throw new Error(`Unknown entry type for entry with the name '${ name }'`)
-
 	})
-
 }

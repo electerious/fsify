@@ -11,13 +11,11 @@ const slash = require('slash')
  * @returns {Array} deletedEntries - Deleted directories and files.
  */
 module.exports = function(entriesToDelete = [], force) {
-
 	// Convert Windows backslash paths to slash paths,
 	// because backward slashes aren't supported in glob pattern.
 	const patternsToDelete = entriesToDelete.map(slash)
 
 	return del.sync(patternsToDelete, {
-		force
+		force,
 	})
-
 }

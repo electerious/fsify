@@ -8,187 +8,137 @@ const uuid = require('uuid').v4
 const index = require('./../src/index')
 
 describe('index()', function() {
-
 	it('should return a function', function() {
-
 		assert.isFunction(index())
-
 	})
 
 	it('should reject when structure is not an array', function() {
-
 		const instance = index()
 
 		return instance({}).catch((error) => {
-
 			assert.strictEqual(error.message, `'structure' must be an array`)
-
 		})
-
 	})
 
 	it('should throw when options is not an object', function() {
-
 		assert.throws(() => {
-
 			index([])
-
 		}, `'options' must be an object, null or undefined`)
-
 	})
 
 	it('should do nothing when called without arguments', function() {
-
 		const instance = index()
 
 		return instance()
-
 	})
 
 	it('should reject when directory name points to the current directory', function() {
-
 		const instance = index()
 
 		const structure = [
 			{
 				type: index.DIRECTORY,
-				name: '.'
-			}
+				name: '.',
+			},
 		]
 
 		return instance(structure).then(() => {
-
 			throw new Error('Returned without error')
-
 		}, (error) => {
-
 			assert.strictEqual(error.message, `Entry name points to the same path as the surrounding structure`)
-
 		})
-
 	})
 
 	it('should reject when directory name resolves to the current directory', function() {
-
 		const instance = index()
 
 		const structure = [
 			{
 				type: index.DIRECTORY,
-				name: './dirname/../'
-			}
+				name: './dirname/../',
+			},
 		]
 
 		return instance(structure).then(() => {
-
 			throw new Error('Returned without error')
-
 		}, (error) => {
-
 			assert.strictEqual(error.message, `Entry name points to the same path as the surrounding structure`)
-
 		})
-
 	})
 
 	it('should reject when directory is outside cwd', function() {
-
 		const instance = index()
 
 		const structure = [
 			{
 				type: index.DIRECTORY,
-				name: '../'
-			}
+				name: '../',
+			},
 		]
 
 		return instance(structure).then(() => {
-
 			throw new Error('Returned without error')
-
 		}, (error) => {
-
 			assert.strictEqual(error.message, `Entry name points to a path outside the cwd`)
-
 		})
-
 	})
 
 	it('should reject when file name points to the current directory', function() {
-
 		const instance = index()
 
 		const structure = [
 			{
 				type: index.FILE,
-				name: '.'
-			}
+				name: '.',
+			},
 		]
 
 		return instance(structure).then(() => {
-
 			throw new Error('Returned without error')
-
 		}, (error) => {
-
 			assert.strictEqual(error.message, `Entry name points to the same path as the surrounding structure`)
-
 		})
-
 	})
 
 	it('should reject when a directory has a string as its contents', function() {
-
 		const instance = index()
 
 		const structure = [
 			{
 				type: index.DIRECTORY,
 				name: uuid(),
-				contents: uuid()
-			}
+				contents: uuid(),
+			},
 		]
 
 		return instance(structure).then(() => {
-
 			throw new Error('Returned without error')
-
 		}, (error) => {
-
 			assert.strictEqual(error.message, `Entry type is 'directory' and 'contents' must be an array, null or undefined`)
-
 		})
-
 	})
 
 	it('should reject when a file has an array as its contents', function() {
-
 		const instance = index()
 
 		const structure = [
 			{
 				type: index.FILE,
 				name: uuid(),
-				contents: []
-			}
+				contents: [],
+			},
 		]
 
 		return instance(structure).then(() => {
-
 			throw new Error('Returned without error')
-
 		}, (error) => {
-
 			assert.strictEqual(error.message, `Entry type is 'file', but 'contents' is an array and should be a string or a buffer`)
-
 		})
-
 	})
 
 	it('should write a file with contents', function() {
-
 		const options = {
-			persistent: false
+			persistent: false,
 		}
 
 		const instance = index(options)
@@ -197,26 +147,21 @@ describe('index()', function() {
 			{
 				type: index.FILE,
 				name: uuid(),
-				contents: uuid()
-			}
+				contents: uuid(),
+			},
 		]
 
 		return instance(structure).then((_structure) => {
-
 			return fs.readFile(_structure[0].name, 'utf8')
-
-		}).then((data) => {
-
-			assert.strictEqual(data, structure[0].contents)
-
 		})
-
+			.then((data) => {
+				assert.strictEqual(data, structure[0].contents)
+			})
 	})
 
 	it('should write a directory without contents', function() {
-
 		const options = {
-			persistent: false
+			persistent: false,
 		}
 
 		const instance = index(options)
@@ -224,22 +169,18 @@ describe('index()', function() {
 		const structure = [
 			{
 				type: index.DIRECTORY,
-				name: uuid()
-			}
+				name: uuid(),
+			},
 		]
 
 		return instance(structure).then((_structure) => {
-
 			return fs.readdir(_structure[0].name)
-
 		})
-
 	})
 
 	it('should return an array where each entry is an absolute path', function() {
-
 		const options = {
-			persistent: false
+			persistent: false,
 		}
 
 		const instance = index(options)
@@ -247,7 +188,7 @@ describe('index()', function() {
 		const structure = [
 			{
 				type: index.FILE,
-				name: uuid()
+				name: uuid(),
 			},
 			{
 				type: index.DIRECTORY,
@@ -255,27 +196,23 @@ describe('index()', function() {
 				contents: [
 					{
 						type: index.FILE,
-						name: uuid()
-					}
-				]
-			}
+						name: uuid(),
+					},
+				],
+			},
 		]
 
 		return instance(structure).then((_structure) => {
-
 			assert.isArray(_structure)
 			assert.isTrue(path.isAbsolute(_structure[0].name))
 			assert.isTrue(path.isAbsolute(_structure[1].name))
 			assert.isTrue(path.isAbsolute(_structure[1].contents[0].name))
-
 		})
-
 	})
 
 	it('should use the process cwd as its cwd', function() {
-
 		const options = {
-			persistent: false
+			persistent: false,
 		}
 
 		const instance = index(options)
@@ -283,22 +220,18 @@ describe('index()', function() {
 		const structure = [
 			{
 				type: index.FILE,
-				name: uuid()
-			}
+				name: uuid(),
+			},
 		]
 
 		return instance(structure).then((_structure) => {
-
 			assert.strictEqual(_structure[0].name, path.resolve(structure[0].name))
-
 		})
-
 	})
 
 	it('should reuse an existing directory', function() {
-
 		const options = {
-			persistent: false
+			persistent: false,
 		}
 
 		const instance = index(options)
@@ -306,23 +239,19 @@ describe('index()', function() {
 		const structure = [
 			{
 				type: index.DIRECTORY,
-				name: uuid()
-			}
+				name: uuid(),
+			},
 		]
 
 		return instance(structure).then(() => {
-
 			return instance(structure)
-
 		})
-
 	})
 
 	it('should use a custom relative cwd as its cwd', function() {
-
 		const options = {
 			cwd: './test',
-			persistent: false
+			persistent: false,
 		}
 
 		const instance = index(options)
@@ -330,24 +259,20 @@ describe('index()', function() {
 		const structure = [
 			{
 				type: index.FILE,
-				name: uuid()
-			}
+				name: uuid(),
+			},
 		]
 
 		return instance(structure).then((_structure) => {
-
 			assert.strictEqual(_structure[0].name, path.resolve(options.cwd, structure[0].name))
-
 		})
-
 	})
 
 	it('should use a custom absolute cwd as its cwd', function() {
-
 		const options = {
 			cwd: os.tmpdir(),
 			persistent: false,
-			force: true
+			force: true,
 		}
 
 		const instance = index(options)
@@ -355,22 +280,18 @@ describe('index()', function() {
 		const structure = [
 			{
 				type: index.FILE,
-				name: uuid()
-			}
+				name: uuid(),
+			},
 		]
 
 		return instance(structure).then((_structure) => {
-
 			assert.strictEqual(_structure[0].name, path.resolve(options.cwd, structure[0].name))
-
 		})
-
 	})
 
 	it('should cleanup non-persistent files when cleanup triggered manually', function() {
-
 		const options = {
-			persistent: false
+			persistent: false,
 		}
 
 		const instance = index(options)
@@ -378,49 +299,39 @@ describe('index()', function() {
 		const structure = [
 			{
 				type: index.FILE,
-				name: uuid()
-			}
+				name: uuid(),
+			},
 		]
 
 		return instance(structure).then(() => {
-
 			return instance.cleanup()
-
-		}).then((deletedEntries) => {
-
-			assert.strictEqual(deletedEntries.length, 1)
-
 		})
-
+			.then((deletedEntries) => {
+				assert.strictEqual(deletedEntries.length, 1)
+			})
 	})
 
 	it('should not cleanup persistent files when cleanup triggered manually', function() {
-
 		const instance = index()
 
 		const structure = [
 			{
 				type: index.FILE,
-				name: uuid()
-			}
+				name: uuid(),
+			},
 		]
 
 		return instance(structure).then((_structure) => {
-
 			return {
 				_structure: _structure,
-				deletedEntries: instance.cleanup()
+				deletedEntries: instance.cleanup(),
 			}
-
-		}).then(({ _structure, deletedEntries }) => {
-
-			assert.strictEqual(deletedEntries.length, 0)
-
-			// Manual cleanup
-			return fs.unlink(_structure[0].name)
-
 		})
+			.then(({ _structure, deletedEntries }) => {
+				assert.strictEqual(deletedEntries.length, 0)
 
+				// Manual cleanup
+				return fs.unlink(_structure[0].name)
+			})
 	})
-
 })

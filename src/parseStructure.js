@@ -10,14 +10,10 @@ const parseEntry = require('./parseEntry')
  * @returns {Promise<Array>} Parsed structure.
  */
 module.exports = function(structure = [], cwd) {
-
 	return new Promise((resolve, reject) => {
-
 		const query = structure.map((entry) => parseEntry(entry, cwd, module.exports))
 
 		Promise.all(query)
 			.then(resolve, reject)
-
 	})
-
 }

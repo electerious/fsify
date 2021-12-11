@@ -13,11 +13,9 @@ const fs = require('fs').promises
  * @returns {Promise}
  */
 module.exports = function(path, data = '', encoding, mode, flag) {
-
 	return fs.writeFile(path, data, {
 		encoding,
 		mode,
-		flag
+		flag,
 	})
-
 }

@@ -9,24 +9,18 @@ const get = require('./get')
  * @returns {Array} flattenedStructure
  */
 module.exports = function(structure = []) {
-
 	return structure.reduce((entries, entry) => {
-
 		const { name, contents, isDirectory } = get(entry)
 
 		entries = [ ...entries, name ]
 
 		if (isDirectory === true) {
-
 			entries = [
 				...entries,
-				...module.exports(contents)
+				...module.exports(contents),
 			]
-
 		}
 
 		return entries
-
 	}, [])
-
 }

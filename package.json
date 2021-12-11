@@ -36,13 +36,8 @@
     "lint": "eslint '{src,test}/**/*.js'"
   },
   "devDependencies": {
-    "@electerious/eslint-config": "^1.4.0",
+    "@electerious/eslint-config": "^3.0.0",
     "chai": "^4.3.0",
-    "eslint": "^7.21.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-react": "^7.22.0",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "eslint-plugin-react-native": "^3.10.0",
     "mocha": "^9.0.0",
     "nyc": "^15.1.0",
     "uuid": "^8.3.2"
