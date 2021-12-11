@@ -133,14 +133,14 @@ fsify(structure)
 `tree` is a Linux and Unix command that lists the contents of directories in a tree-like format. It's a helpful CLI to view the structure of your file system. The flag `-J` prints out an JSON representation of the tree. The output can be used in `fsify`.
 
 ```
-tree -J > tree.json
+tree -J --noreport ./* > tree.json
 ```
 
 ```js
 const fs = require('fs')
 const fsify = require('fsify')()
 
-const structure = fs.readFileSync('tree.json', 'utf8')
+const structure = require('./tree')
 
 fsify(structure)
 	.then((structure) => console.log(structure))
