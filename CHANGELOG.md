@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 - Only support Node.js 12+
 
+### Fixed
+
+- `tree -J` example in README (#38)
+
 ## [4.0.2] - 2021-02-28
 
 ### Changed
