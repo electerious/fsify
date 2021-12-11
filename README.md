@@ -64,7 +64,7 @@ const structure = [
 
 fsify(structure)
 	.then((structure) => console.log(structure))
-	.catch((err) => console.error(err))
+	.catch((error) => console.error(error))
 ```
 
 ### Deeply nested structure
@@ -100,7 +100,7 @@ const structure = [
 
 fsify(structure)
 	.then((structure) => console.log(structure))
-	.catch((err) => console.error(err))
+	.catch((error) => console.error(error))
 ```
 
 ### Temporary file in existing directory
@@ -125,7 +125,7 @@ const structure = [
 
 fsify(structure)
 	.then((structure) => console.log(structure))
-	.catch((err) => console.error(err))
+	.catch((error) => console.error(error))
 ```
 
 ### Structure from `tree -J`
@@ -144,7 +144,7 @@ const structure = require('./tree')
 
 fsify(structure)
 	.then((structure) => console.log(structure))
-	.catch((err) => console.error(err))
+	.catch((error) => console.error(error))
 ```
 
 ## API
@@ -165,7 +165,7 @@ const fsify = require('fsify')({
 
 ### Parameters
 
-- `opts` `{?Object}` Options.
+- `options` `{?Object}` Options.
 	- `cwd` `{?String}` - Custom relative or absolute path. Defaults to `process.cwd()`.
 	- `persistent` `{?Boolean}` - Keep directories and files even when the process exists. Defaults to `true`.
 	- `force` `{?Boolean}` - Allow deleting the current working directory and outside. Defaults to `false`.
@@ -188,7 +188,7 @@ const structure = [
 
 fsify(structure)
 	.then((structure) => console.log(structure))
-	.catch((err) => console.error(err))
+	.catch((error) => console.error(error))
 ```
 
 ### Parameters

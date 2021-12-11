@@ -11,7 +11,6 @@ const isFile = require('./isFile')
  * @returns {Object} entry - Parsed entry.
  */
 module.exports = function(entry) {
-
 	if (isPlainObj(entry) === false) {
 		throw new Error(`Each entry of 'structure' must be an object`)
 	}
@@ -37,7 +36,6 @@ module.exports = function(entry) {
 		encoding: encoding,
 		flag: flag,
 		isDirectory: _isDirectory,
-		isFile: _isFile
+		isFile: _isFile,
 	}
-
 }
