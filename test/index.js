@@ -19,21 +19,21 @@ describe('index()', function() {
 
 		const instance = index()
 
-		return instance({}).catch((err) => {
+		return instance({}).catch((error) => {
 
-			assert.strictEqual(err.message, `'structure' must be an array`)
+			assert.strictEqual(error.message, `'structure' must be an array`)
 
 		})
 
 	})
 
-	it('should throw when opts is not an object', function() {
+	it('should throw when options is not an object', function() {
 
 		assert.throws(() => {
 
 			index([])
 
-		}, `'opts' must be an object, null or undefined`)
+		}, `'options' must be an object, null or undefined`)
 
 	})
 
@@ -60,9 +60,9 @@ describe('index()', function() {
 
 			throw new Error('Returned without error')
 
-		}, (err) => {
+		}, (error) => {
 
-			assert.strictEqual(err.message, `Entry name points to the same path as the surrounding structure`)
+			assert.strictEqual(error.message, `Entry name points to the same path as the surrounding structure`)
 
 		})
 
@@ -83,9 +83,9 @@ describe('index()', function() {
 
 			throw new Error('Returned without error')
 
-		}, (err) => {
+		}, (error) => {
 
-			assert.strictEqual(err.message, `Entry name points to the same path as the surrounding structure`)
+			assert.strictEqual(error.message, `Entry name points to the same path as the surrounding structure`)
 
 		})
 
@@ -106,9 +106,9 @@ describe('index()', function() {
 
 			throw new Error('Returned without error')
 
-		}, (err) => {
+		}, (error) => {
 
-			assert.strictEqual(err.message, `Entry name points to a path outside the cwd`)
+			assert.strictEqual(error.message, `Entry name points to a path outside the cwd`)
 
 		})
 
@@ -129,9 +129,9 @@ describe('index()', function() {
 
 			throw new Error('Returned without error')
 
-		}, (err) => {
+		}, (error) => {
 
-			assert.strictEqual(err.message, `Entry name points to the same path as the surrounding structure`)
+			assert.strictEqual(error.message, `Entry name points to the same path as the surrounding structure`)
 
 		})
 
@@ -153,9 +153,9 @@ describe('index()', function() {
 
 			throw new Error('Returned without error')
 
-		}, (err) => {
+		}, (error) => {
 
-			assert.strictEqual(err.message, `Entry type is 'directory' and 'contents' must be an array, null or undefined`)
+			assert.strictEqual(error.message, `Entry type is 'directory' and 'contents' must be an array, null or undefined`)
 
 		})
 
@@ -177,9 +177,9 @@ describe('index()', function() {
 
 			throw new Error('Returned without error')
 
-		}, (err) => {
+		}, (error) => {
 
-			assert.strictEqual(err.message, `Entry type is 'file', but 'contents' is an array and should be a string or a buffer`)
+			assert.strictEqual(error.message, `Entry type is 'file', but 'contents' is an array and should be a string or a buffer`)
 
 		})
 
@@ -187,11 +187,11 @@ describe('index()', function() {
 
 	it('should write a file with contents', function() {
 
-		const opts = {
+		const options = {
 			persistent: false
 		}
 
-		const instance = index(opts)
+		const instance = index(options)
 
 		const structure = [
 			{
@@ -215,11 +215,11 @@ describe('index()', function() {
 
 	it('should write a directory without contents', function() {
 
-		const opts = {
+		const options = {
 			persistent: false
 		}
 
-		const instance = index(opts)
+		const instance = index(options)
 
 		const structure = [
 			{
@@ -238,11 +238,11 @@ describe('index()', function() {
 
 	it('should return an array where each entry is an absolute path', function() {
 
-		const opts = {
+		const options = {
 			persistent: false
 		}
 
-		const instance = index(opts)
+		const instance = index(options)
 
 		const structure = [
 			{
@@ -274,11 +274,11 @@ describe('index()', function() {
 
 	it('should use the process cwd as its cwd', function() {
 
-		const opts = {
+		const options = {
 			persistent: false
 		}
 
-		const instance = index(opts)
+		const instance = index(options)
 
 		const structure = [
 			{
@@ -297,11 +297,11 @@ describe('index()', function() {
 
 	it('should reuse an existing directory', function() {
 
-		const opts = {
+		const options = {
 			persistent: false
 		}
 
-		const instance = index(opts)
+		const instance = index(options)
 
 		const structure = [
 			{
@@ -320,12 +320,12 @@ describe('index()', function() {
 
 	it('should use a custom relative cwd as its cwd', function() {
 
-		const opts = {
+		const options = {
 			cwd: './test',
 			persistent: false
 		}
 
-		const instance = index(opts)
+		const instance = index(options)
 
 		const structure = [
 			{
@@ -336,7 +336,7 @@ describe('index()', function() {
 
 		return instance(structure).then((_structure) => {
 
-			assert.strictEqual(_structure[0].name, path.resolve(opts.cwd, structure[0].name))
+			assert.strictEqual(_structure[0].name, path.resolve(options.cwd, structure[0].name))
 
 		})
 
@@ -344,13 +344,13 @@ describe('index()', function() {
 
 	it('should use a custom absolute cwd as its cwd', function() {
 
-		const opts = {
+		const options = {
 			cwd: os.tmpdir(),
 			persistent: false,
 			force: true
 		}
 
-		const instance = index(opts)
+		const instance = index(options)
 
 		const structure = [
 			{
@@ -361,7 +361,7 @@ describe('index()', function() {
 
 		return instance(structure).then((_structure) => {
 
-			assert.strictEqual(_structure[0].name, path.resolve(opts.cwd, structure[0].name))
+			assert.strictEqual(_structure[0].name, path.resolve(options.cwd, structure[0].name))
 
 		})
 
@@ -369,11 +369,11 @@ describe('index()', function() {
 
 	it('should cleanup non-persistent files when cleanup triggered manually', function() {
 
-		const opts = {
+		const options = {
 			persistent: false
 		}
 
-		const instance = index(opts)
+		const instance = index(options)
 
 		const structure = [
 			{

@@ -10,10 +10,10 @@ const cleanup = require('./cleanup')
 /**
  * Creates a new instance of fsify. Each instance has its own bin to make testing easier.
  * @public
- * @param {?Object} opts - Options.
+ * @param {?Object} options - Options.
  * @returns {Function}
  */
-module.exports = function(opts = {}) {
+module.exports = function(options = {}) {
 
 	const bin = require('./bin')()
 
@@ -30,9 +30,9 @@ module.exports = function(opts = {}) {
 				throw new Error(`'structure' must be an array`)
 			}
 
-			parseStructure(structure, opts.cwd)
+			parseStructure(structure, options.cwd)
 				.then((parsedStructure) => writeStructure(parsedStructure))
-				.then((parsedStructure) => binStructure(parsedStructure, bin, opts.persistent))
+				.then((parsedStructure) => binStructure(parsedStructure, bin, options.persistent))
 				.then(resolve, reject)
 
 		})
@@ -47,7 +47,7 @@ module.exports = function(opts = {}) {
 
 		const entriesToDelete = bin()
 
-		return cleanup(entriesToDelete, opts.force)
+		return cleanup(entriesToDelete, options.force)
 
 	}
 
@@ -59,21 +59,21 @@ module.exports = function(opts = {}) {
 	main.DIRECTORY = module.exports.DIRECTORY
 	main.FILE = module.exports.FILE
 
-	if (isPlainObj(opts) === false) {
-		throw new Error(`'opts' must be an object, null or undefined`)
+	if (isPlainObj(options) === false) {
+		throw new Error(`'options' must be an object, null or undefined`)
 	}
 
-	opts = Object.assign({
+	options = Object.assign({
 		cwd: process.cwd(),
 		persistent: true,
 		force: false
-	}, opts)
+	}, options)
 
 	// Support relative and absolute paths
-	opts.cwd = path.resolve(opts.cwd)
+	options.cwd = path.resolve(options.cwd)
 
 	// Add cleanup listener when files shouldn't be persistent
-	if (opts.persistent === false) process.addListener('exit', main.cleanup)
+	if (options.persistent === false) process.addListener('exit', main.cleanup)
 
 	return main
 

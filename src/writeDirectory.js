@@ -13,6 +13,6 @@ const fs = require('fs').promises
 module.exports = function(path, mode) {
 
 	return fs.mkdir(path, mode)
-		.catch((err) => { if (err.code !== 'EEXIST') throw err })
+		.catch((error) => { if (error.code !== 'EEXIST') throw error })
 
 }
