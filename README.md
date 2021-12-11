@@ -130,7 +130,7 @@ fsify(structure)
 
 ### Structure from `tree -J`
 
-`tree` is a Linux and Unix command that lists the contents of directories in a tree-like format. It's a helpful CLI to view the structure of your file system. The flag `-J` prints out an JSON representation of the tree. The output can be used in `fsify`.
+`tree` is a Linux and Unix command that lists the contents of directories in a tree-like format. It's a helpful CLI to view the structure of your file system.
 
 ```
 tree -J --noreport ./* > tree.json
