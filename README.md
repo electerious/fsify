@@ -12,7 +12,7 @@ Convert an array of objects into a persistent or temporary directory structure.
 	- [Structure with content](#structure-with-content)
 	- [Deeply nested structure](#deeply-nested-structure)
 	- [Temporary file in existing directory](#temporary-file-in-existing-directory)
-	- [Structure from `tree -J`](#structure-from-tree--j)
+	- [Structure from `tree`](#structure-from-tree)
 - [API](#api)
 - [Instance API](#instance-api)
 - [Structure](#structure)
@@ -128,7 +128,7 @@ fsify(structure)
 	.catch((error) => console.error(error))
 ```
 
-### Structure from `tree -J`
+### Structure from `tree`
 
 `tree` is a Linux and Unix command that lists the contents of directories in a tree-like format. It's a helpful CLI to view the structure of your file system.
 
