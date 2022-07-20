@@ -43,7 +43,7 @@
     "uuid": "^8.3.2"
   },
   "dependencies": {
-    "del": "^6.0.0",
+    "del": "^7.0.0",
     "is-path-inside": "^3.0.0",
     "is-plain-obj": "^3.0.0",
     "slash": "^3.0.0"
