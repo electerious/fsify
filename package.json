@@ -36,8 +36,8 @@
     "lint": "eslint '{src,test}/**/*.js'"
   },
   "devDependencies": {
-    "@electerious/eslint-config": "^3.0.0",
-    "chai": "^4.3.0",
+    "@electerious/eslint-config": "^3.5.0",
+    "chai": "^4.3.6",
     "mocha": "^10.0.0",
     "nyc": "^15.1.0",
     "uuid": "^9.0.0"
