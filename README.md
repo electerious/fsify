@@ -166,9 +166,9 @@ const fsify = require('fsify')({
 ### Parameters
 
 - `options` `{?Object}` Options.
-	- `cwd` `{?String}` - Custom relative or absolute path. Defaults to `process.cwd()`.
-	- `persistent` `{?Boolean}` - Keep directories and files even when the process exists. Defaults to `true`.
-	- `force` `{?Boolean}` - Allow deleting the current working directory and outside. Defaults to `false`.
+	- `cwd` `{?String}` Custom relative or absolute path. Defaults to `process.cwd()`.
+	- `persistent` `{?Boolean}` Keep directories and files even when the process exists. Defaults to `true`.
+	- `force` `{?Boolean}` Allow deleting the current working directory and outside. Defaults to `false`.
 
 ### Returns
 
