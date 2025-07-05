@@ -1,8 +1,5 @@
-'use strict'
-
-const isPlainObj = require('is-plain-obj')
-const isDirectory = require('./isDirectory')
-const isFile = require('./isFile')
+import isPlainObj from 'is-plain-obj'
+import { DIRECTORY, FILE } from './index.js'
 
 /**
  * Parses an entry.
@@ -10,32 +7,30 @@ const isFile = require('./isFile')
  * @param {Object} entry - An object that represents a directory or file.
  * @returns {Object} entry - Parsed entry.
  */
-module.exports = function(entry) {
-	if (isPlainObj(entry) === false) {
-		throw new Error(`Each entry of 'structure' must be an object`)
-	}
+export default function get(entry) {
+  if (!isPlainObj(entry)) {
+    throw new Error(`Each entry of 'structure' must be an object`)
+  }
 
-	const { name, type, contents, mode, encoding, flag } = entry
+  const { name, type, contents, mode, encoding, flag } = entry
+  if (typeof name !== 'string') {
+    throw new Error(`Each directory and file must have a 'name'`)
+  }
 
-	if (typeof name !== 'string') {
-		throw new Error(`Each directory and file must have a 'name'`)
-	}
+  const isDirectory = type === DIRECTORY
+  const isFile = type === FILE
+  if (!isDirectory && !isFile) {
+    throw new Error(`Each entry must have a known 'type'`)
+  }
 
-	const _isDirectory = isDirectory(type)
-	const _isFile = isFile(type)
-
-	if (_isDirectory === false && _isFile === false) {
-		throw new Error(`Each entry must have a known 'type'`)
-	}
-
-	return {
-		name: name,
-		type: type,
-		contents: contents,
-		mode: mode,
-		encoding: encoding,
-		flag: flag,
-		isDirectory: _isDirectory,
-		isFile: _isFile,
-	}
+  return {
+    name,
+    type,
+    contents,
+    mode,
+    encoding,
+    flag,
+    isDirectory,
+    isFile,
+  }
 }

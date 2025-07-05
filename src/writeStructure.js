@@ -1,6 +1,4 @@
-'use strict'
-
-const writeEntry = require('./writeEntry')
+import writeEntry from './writeEntry.js'
 
 /**
  * Converts an array into a directory structure.
@@ -8,11 +6,7 @@ const writeEntry = require('./writeEntry')
  * @param {?Array} structure - Array of objects containing information about a directory or file.
  * @returns {Promise<Array>} Original structure passed to the function.
  */
-module.exports = function(structure = []) {
-	return new Promise((resolve, reject) => {
-		const query = structure.map((entry) => writeEntry(entry, module.exports))
-
-		Promise.all(query)
-			.then(resolve, reject)
-	})
+export default function writeStructure(structure = []) {
+  const query = structure.map((entry) => writeEntry(entry, writeStructure))
+  return Promise.all(query)
 }

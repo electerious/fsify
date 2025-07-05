@@ -1,6 +1,4 @@
-'use strict'
-
-const fs = require('fs').promises
+import fs from 'node:fs/promises'
 
 /**
  * Asynchronously writes data to a file, replacing the file if it already exists.
@@ -12,10 +10,10 @@ const fs = require('fs').promises
  * @param {?String} flag
  * @returns {Promise}
  */
-module.exports = function(path, data = '', encoding, mode, flag) {
-	return fs.writeFile(path, data, {
-		encoding,
-		mode,
-		flag,
-	})
+export default function writeFile(path, data = '', encoding, mode, flag) {
+  return fs.writeFile(path, data, {
+    encoding,
+    mode,
+    flag,
+  })
 }

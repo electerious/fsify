@@ -1,6 +1,4 @@
-'use strict'
-
-const parseEntry = require('./parseEntry')
+import parseEntry from './parseEntry.js'
 
 /**
  * Parses an array that represents a directory structure.
@@ -9,11 +7,7 @@ const parseEntry = require('./parseEntry')
  * @param {String} cwd - Directory to start from.
  * @returns {Promise<Array>} Parsed structure.
  */
-module.exports = function(structure = [], cwd) {
-	return new Promise((resolve, reject) => {
-		const query = structure.map((entry) => parseEntry(entry, cwd, module.exports))
-
-		Promise.all(query)
-			.then(resolve, reject)
-	})
+export default function parseStructure(structure = [], cwd) {
+  const query = structure.map((entry) => parseEntry(entry, cwd, parseStructure))
+  return Promise.all(query)
 }

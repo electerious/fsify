@@ -1,6 +1,4 @@
-'use strict'
-
-const get = require('./get')
+import get from './get.js'
 
 /**
  * Flattens a structure to an array that only contains the name of each entries.
@@ -8,19 +6,15 @@ const get = require('./get')
  * @param {?Array} structure - Array of objects containing information about a directory or file.
  * @returns {Array} flattenedStructure
  */
-module.exports = function(structure = []) {
-	return structure.reduce((entries, entry) => {
-		const { name, contents, isDirectory } = get(entry)
+export default function flatten(structure = []) {
+  return structure.reduce((entries, entry) => {
+    const { name, contents, isDirectory } = get(entry)
+    entries = [...entries, name]
 
-		entries = [ ...entries, name ]
+    if (isDirectory === true) {
+      entries = [...entries, ...flatten(contents)]
+    }
 
-		if (isDirectory === true) {
-			entries = [
-				...entries,
-				...module.exports(contents),
-			]
-		}
-
-		return entries
-	}, [])
+    return entries
+  }, [])
 }

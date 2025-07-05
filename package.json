@@ -1,11 +1,7 @@
 {
   "name": "fsify",
   "version": "5.0.0",
-  "authors": [
-    "Tobias Reich <tobias@electerious.com>"
-  ],
   "description": "Convert an array of objects into a persistent or temporary directory structure",
-  "main": "src/index.js",
   "keywords": [
     "fs",
     "file",
@@ -21,26 +17,21 @@
     "directory",
     "dir"
   ],
-  "license": "MIT",
   "homepage": "https://github.com/electerious/fsify",
   "repository": {
     "type": "git",
     "url": "https://github.com/electerious/fsify.git"
   },
+  "license": "MIT",
+  "type": "module",
+  "main": "src/index.js",
   "files": [
     "src"
   ],
   "scripts": {
-    "coveralls": "nyc report --reporter=lcov",
-    "test": "nyc node_modules/mocha/bin/_mocha",
-    "lint": "eslint '{src,test}/**/*.js'"
-  },
-  "devDependencies": {
-    "@electerious/eslint-config": "^3.5.0",
-    "chai": "^4.3.6",
-    "mocha": "^10.0.0",
-    "nyc": "^15.1.0",
-    "uuid": "^9.0.0"
+    "format": "npm run prettier -- --write",
+    "prettier": "prettier --ignore-path .gitignore '**/*.{js,json,md}'",
+    "test": "npm run prettier -- --check && node --test"
   },
   "dependencies": {
     "del": "^6.0.0",
@@ -48,8 +39,12 @@
     "is-plain-obj": "^3.0.0",
     "slash": "^3.0.0"
   },
-  "eslintConfig": {
-    "root": true,
-    "extends": "@electerious/eslint-config"
-  }
+  "devDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "^4.4.2",
+    "prettier": "^3.6.2",
+    "prettier-plugin-packagejson": "^2.5.18"
+  },
+  "authors": [
+    "Tobias Reich <tobias@electerious.com>"
+  ]
 }
