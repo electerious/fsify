@@ -131,7 +131,7 @@ fsify({
 
 ### Temporary structure with manual cleanup
 
-Temporary structures can be cleaned up manually by calling the `cleanup` method on the instance. This is useful if you want to create a temporary structure and remove before the process exits. The cleanup happens synchronously.
+Temporary structures can be cleaned up manually by calling the `cleanup` method on the instance. This is useful if you want to create a temporary structure and remove it before the process exits. The cleanup happens synchronously.
 
 ```
 dirname/
