@@ -1,11 +1,9 @@
-'use strict'
-
-const path = require('path')
-const isPlainObj = require('is-plain-obj')
-const parseStructure = require('./parseStructure')
-const writeStructure = require('./writeStructure')
-const binStructure = require('./binStructure')
-const cleanup = require('./cleanup')
+import path from 'node:path'
+import isPlainObj from 'is-plain-obj'
+import cleanup from './cleanup.js'
+import flatten from './flatten.js'
+import parseStructure from './parseStructure.js'
+import writeStructure from './writeStructure.js'
 
 /**
  * Creates a new instance of fsify. Each instance has its own bin to make testing easier.
@@ -13,69 +11,70 @@ const cleanup = require('./cleanup')
  * @param {?Object} options - Options.
  * @returns {Function}
  */
-module.exports = function(options = {}) {
-	const bin = require('./bin')()
+export default function fsify(options = {}) {
+  if (!isPlainObj(options)) {
+    throw new Error(`'options' must be an object, null or undefined`)
+  }
 
-	/**
-	 * Converts an object into a persistent or temporary directory structure.
-	 * @param {?Array} structure - Array of objects containing information about a directory or file.
-	 * @returns {Promise<Array>} Parsed structure.
-	 */
-	const main = function(structure = []) {
-		return new Promise((resolve, reject) => {
-			if (Array.isArray(structure) === false) {
-				throw new Error(`'structure' must be an array`)
-			}
+  let entriesToDelete = []
 
-			parseStructure(structure, options.cwd)
-				.then((parsedStructure) => writeStructure(parsedStructure))
-				.then((parsedStructure) => binStructure(parsedStructure, bin, options.persistent))
-				.then(resolve, reject)
-		})
-	}
+  /**
+   * Converts an object into a persistent or temporary directory structure.
+   * @param {?Array} structure - Array of objects containing information about a directory or file.
+   * @returns {Promise<Array>} Parsed structure.
+   */
+  const instance = async function (structure = []) {
+    if (Array.isArray(structure) === false) {
+      throw new Error(`'structure' must be an array`)
+    }
 
-	/**
-	 * Triggers a cleanup.
-	 * @returns {Array} deletedEntries - Deleted directories and files.
-	 */
-	main.cleanup = function() {
-		const entriesToDelete = bin()
+    const parsedStructure = await parseStructure(structure, options.cwd)
+    const writtenStructure = await writeStructure(parsedStructure)
 
-		return cleanup(entriesToDelete, options.force)
-	}
+    if (options.persistent === false) {
+      const flattenedStructure = flatten(writtenStructure)
+      entriesToDelete = [...entriesToDelete, ...flattenedStructure]
+    }
 
-	/**
-	 * Constants for the structure.
-	 * We don't use symbols for the constants as it should still be possible
-	 * to copy, paste and use the JSON output of `tree`.
-	 */
-	main.DIRECTORY = module.exports.DIRECTORY
-	main.FILE = module.exports.FILE
+    return writtenStructure
+  }
 
-	if (isPlainObj(options) === false) {
-		throw new Error(`'options' must be an object, null or undefined`)
-	}
+  /**
+   * Triggers a cleanup.
+   * @returns {Array} deletedEntries - Deleted directories and files.
+   */
+  instance.cleanup = function () {
+    return cleanup(entriesToDelete, options.force)
+  }
 
-	options = Object.assign({
-		cwd: process.cwd(),
-		persistent: true,
-		force: false,
-	}, options)
+  options = {
+    cwd: process.cwd(),
+    persistent: true,
+    force: false,
+    ...options,
+  }
 
-	// Support relative and absolute paths
-	options.cwd = path.resolve(options.cwd)
+  // Support relative and absolute paths
+  options.cwd = path.resolve(options.cwd)
 
-	// Add cleanup listener when files shouldn't be persistent
-	if (options.persistent === false) process.addListener('exit', main.cleanup)
+  // Add cleanup listener when files shouldn't be persistent
+  if (options.persistent === false) process.addListener('exit', instance.cleanup)
 
-	return main
+  return instance
 }
 
 /**
- * Constants for the structure.
+ * Constant for files.
  * We don't use symbols for the constants as it should still be possible
  * to copy, paste and use the JSON output of `tree`.
  * @public
  */
-module.exports.DIRECTORY = 'directory'
-module.exports.FILE = 'file'
+export const FILE = 'file'
+
+/**
+ * Constant for directories.
+ * We don't use symbols for the constants as it should still be possible
+ * to copy, paste and use the JSON output of `tree`.
+ * @public
+ */
+export const DIRECTORY = 'directory'

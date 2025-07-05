@@ -1,8 +1,6 @@
-'use strict'
-
-const get = require('./get')
-const writeDirectory = require('./writeDirectory')
-const writeFile = require('./writeFile')
+import get from './get.js'
+import writeDirectory from './writeDirectory.js'
+import writeFile from './writeFile.js'
 
 /**
  * Writes an entry as directory or file.
@@ -11,23 +9,21 @@ const writeFile = require('./writeFile')
  * @param {Function} writeStructure - Function that converts an array into a directory structure.
  * @returns {Promise<Object>} Original entry passed to the function.
  */
-module.exports = function(entry, writeStructure) {
-	return new Promise((resolve, reject) => {
-		const { name, contents, encoding, mode, flag, isDirectory, isFile } = get(entry)
+export default async function writeEntry(entry, writeStructure) {
+  const { name, contents, encoding, mode, flag, isDirectory, isFile } = get(entry)
 
-		if (isDirectory === true) {
-			return writeDirectory(name, mode)
-				.then(() => writeStructure(contents, name))
-				.then(() => entry)
-				.then(resolve, reject)
-		}
+  if (isDirectory === true) {
+    await writeDirectory(name, mode)
+    await writeStructure(contents, name)
 
-		if (isFile === true) {
-			return writeFile(name, contents, encoding, mode, flag)
-				.then(() => entry)
-				.then(resolve, reject)
-		}
+    return entry
+  }
 
-		throw new Error(`Unknown entry type for entry with the name '${ name }'`)
-	})
+  if (isFile === true) {
+    await writeFile(name, contents, encoding, mode, flag)
+
+    return entry
+  }
+
+  throw new Error(`Unknown entry type for entry with the name '${name}'`)
 }

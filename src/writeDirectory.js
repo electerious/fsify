@@ -1,6 +1,4 @@
-'use strict'
-
-const fs = require('fs').promises
+import fs from 'node:fs/promises'
 
 /**
  * Creates a new directory. Subdirectories must exist.
@@ -10,7 +8,8 @@ const fs = require('fs').promises
  * @param {?String} mode - If a directory needs to be created, set the mode to this octal permission string.
  * @returns {Promise}
  */
-module.exports = function(path, mode) {
-	return fs.mkdir(path, mode)
-		.catch((error) => { if (error.code !== 'EEXIST') throw error })
+export default function writeDirectory(path, mode) {
+  return fs.mkdir(path, mode).catch((error) => {
+    if (error.code !== 'EEXIST') throw error
+  })
 }
