@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [7.0.0] - 2025-07-05
+## [6.0.0] - 2025-07-05
 
 Modernized codebase with ESM modules, less dependencies, updated Node.js support and common code style.
 
@@ -17,12 +17,6 @@ Modernized codebase with ESM modules, less dependencies, updated Node.js support
 - Requires Node.js version 20 or higher
 - Rewritten to use ESM modules (e.g. `import fsify from 'fsify'`)
 - `FILE` and `DIRECTORY` constants can now be imported from the main module (e.g. `import { FILE, DIRECTORY } from 'fsify'`)
-
-## [6.0.0] - 2022-10-01
-
-### Changed
-
-- Only support Node.js 14 or newer
 
 ## [5.0.0] - 2021-12-11
 
