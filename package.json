@@ -30,7 +30,7 @@
   ],
   "scripts": {
     "format": "npm run prettier -- --write",
-    "prettier": "prettier --ignore-path .gitignore '**/*.{js,json,md}'",
+    "prettier": "prettier --ignore-path .gitignore '**/*.{js,json,md,yml}'",
     "test": "npm run prettier -- --check && node --test"
   },
   "dependencies": {
