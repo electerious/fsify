@@ -1,5 +1,5 @@
-import path from 'node:path'
 import isPlainObj from 'is-plain-obj'
+import path from 'node:path'
 import cleanup from './cleanup.js'
 import flatten from './flatten.js'
 import parseStructure from './parseStructure.js'

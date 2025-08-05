@@ -1,5 +1,5 @@
-import path from 'node:path'
 import isPathInside from 'is-path-inside'
+import path from 'node:path'
 import get from './get.js'
 
 /**
