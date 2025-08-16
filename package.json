@@ -42,7 +42,7 @@
     "slash": "^3.0.0"
   },
   "devDependencies": {
-    "@electerious/eslint-config": "^5.0.0-1",
+    "@electerious/eslint-config": "^5.0.0",
     "@electerious/prettier-config": "^3.0.0",
     "eslint": "^9.33.0",
     "prettier": "^3.6.2"

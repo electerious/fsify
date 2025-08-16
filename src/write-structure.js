@@ -1,4 +1,4 @@
-import writeEntry from './writeEntry.js'
+import writeEntry from './write-entry.js'
 
 /**
  * Converts an array into a directory structure.
