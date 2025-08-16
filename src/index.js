@@ -7,9 +7,9 @@ import writeStructure from './writeStructure.js'
 
 /**
  * Creates a new instance of fsify. Each instance has its own bin to make testing easier.
- * @public
- * @param {?Object} options - Options.
- * @returns {Function}
+ *
+ * @param {?object} options - Options.
+ * @returns {Function} A function that can be called with a structure to create files and directories.
  */
 export default function fsify(options = {}) {
   if (!isPlainObj(options)) {
@@ -20,12 +20,13 @@ export default function fsify(options = {}) {
 
   /**
    * Converts an object into a persistent or temporary directory structure.
+   *
    * @param {?Array} structure - Array of objects containing information about a directory or file.
    * @returns {Promise<Array>} Parsed structure.
    */
   const instance = async function (structure = []) {
     if (Array.isArray(structure) === false) {
-      throw new Error(`'structure' must be an array`)
+      throw new TypeError(`'structure' must be an array`)
     }
 
     const parsedStructure = await parseStructure(structure, options.cwd)
@@ -41,6 +42,7 @@ export default function fsify(options = {}) {
 
   /**
    * Triggers a cleanup.
+   *
    * @returns {Array} deletedEntries - Deleted directories and files.
    */
   instance.cleanup = function () {
@@ -67,7 +69,6 @@ export default function fsify(options = {}) {
  * Constant for files.
  * We don't use symbols for the constants as it should still be possible
  * to copy, paste and use the JSON output of `tree`.
- * @public
  */
 export const FILE = 'file'
 
@@ -75,6 +76,5 @@ export const FILE = 'file'
  * Constant for directories.
  * We don't use symbols for the constants as it should still be possible
  * to copy, paste and use the JSON output of `tree`.
- * @public
  */
 export const DIRECTORY = 'directory'

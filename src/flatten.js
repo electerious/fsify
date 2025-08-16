@@ -2,7 +2,7 @@ import get from './get.js'
 
 /**
  * Flattens a structure to an array that only contains the name of each entries.
- * @public
+ *
  * @param {?Array} structure - Array of objects containing information about a directory or file.
  * @returns {Array} flattenedStructure
  */

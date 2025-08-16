@@ -29,18 +29,22 @@
     "src"
   ],
   "scripts": {
-    "format": "npm run prettier -- --write",
+    "eslint": "eslint '**/*.js'",
+    "format": "npm run eslint -- --fix && npm run prettier -- --write",
+    "lint": "npm run eslint && npm run prettier -- --check",
     "prettier": "prettier --ignore-path .gitignore '**/*.{js,json,md,yml}'",
-    "test": "npm run prettier -- --check && node --test"
+    "test": "npm run lint && node --test"
   },
   "dependencies": {
-    "del": "^6.0.0",
-    "is-path-inside": "^3.0.0",
+    "del": "^6.1.1",
+    "is-path-inside": "^3.0.3",
     "is-plain-obj": "^3.0.0",
     "slash": "^3.0.0"
   },
   "devDependencies": {
+    "@electerious/eslint-config": "^5.0.0-1",
     "@electerious/prettier-config": "^3.0.0",
+    "eslint": "^9.33.0",
     "prettier": "^3.6.2"
   },
   "authors": [
