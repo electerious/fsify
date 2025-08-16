@@ -25,7 +25,7 @@ export default async function parseEntry(entry, cwd, parseStructure) {
   }
 
   if (isDirectory === true) {
-    if (Array.isArray(contents) === false) {
+    if (contents != null && Array.isArray(contents) === false) {
       throw new TypeError(`Entry type is 'directory' and 'contents' must be an array, null or undefined`)
     }
 

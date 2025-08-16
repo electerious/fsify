@@ -1,6 +1,6 @@
 import get from './get.js'
-import writeDirectory from './writeDirectory.js'
-import writeFile from './writeFile.js'
+import writeDirectory from './write-directory.js'
+import writeFile from './write-file.js'
 
 /**
  * Writes an entry as directory or file.

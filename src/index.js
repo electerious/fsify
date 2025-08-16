@@ -2,8 +2,8 @@ import isPlainObj from 'is-plain-obj'
 import path from 'node:path'
 import cleanup from './cleanup.js'
 import flatten from './flatten.js'
-import parseStructure from './parseStructure.js'
-import writeStructure from './writeStructure.js'
+import parseStructure from './parse-structure.js'
+import writeStructure from './write-structure.js'
 
 /**
  * Creates a new instance of fsify. Each instance has its own bin to make testing easier.
