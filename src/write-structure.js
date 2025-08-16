@@ -2,7 +2,7 @@ import writeEntry from './writeEntry.js'
 
 /**
  * Converts an array into a directory structure.
- * @public
+ *
  * @param {?Array} structure - Array of objects containing information about a directory or file.
  * @returns {Promise<Array>} Original structure passed to the function.
  */

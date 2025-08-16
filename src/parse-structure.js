@@ -1,10 +1,10 @@
-import parseEntry from './parseEntry.js'
+import parseEntry from './parse-entry.js'
 
 /**
  * Parses an array that represents a directory structure.
- * @public
+ *
  * @param {?Array} structure - Array of objects containing information about a directory or file.
- * @param {String} cwd - Directory to start from.
+ * @param {string} cwd - Directory to start from.
  * @returns {Promise<Array>} Parsed structure.
  */
 export default function parseStructure(structure = [], cwd) {

@@ -3,9 +3,9 @@ import { DIRECTORY, FILE } from './index.js'
 
 /**
  * Parses an entry.
- * @public
- * @param {Object} entry - An object that represents a directory or file.
- * @returns {Object} entry - Parsed entry.
+ *
+ * @param {object} entry - An object that represents a directory or file.
+ * @returns {object} entry - Parsed entry.
  */
 export default function get(entry) {
   if (!isPlainObj(entry)) {
@@ -14,7 +14,7 @@ export default function get(entry) {
 
   const { name, type, contents, mode, encoding, flag } = entry
   if (typeof name !== 'string') {
-    throw new Error(`Each directory and file must have a 'name'`)
+    throw new TypeError(`Each directory and file must have a 'name'`)
   }
 
   const isDirectory = type === DIRECTORY

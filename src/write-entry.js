@@ -4,10 +4,10 @@ import writeFile from './writeFile.js'
 
 /**
  * Writes an entry as directory or file.
- * @public
- * @param {Object} entry - Objects containing information about a directory or file.
+ *
+ * @param {object} entry - Objects containing information about a directory or file.
  * @param {Function} writeStructure - Function that converts an array into a directory structure.
- * @returns {Promise<Object>} Original entry passed to the function.
+ * @returns {Promise<object>} Original entry passed to the function.
  */
 export default async function writeEntry(entry, writeStructure) {
   const { name, contents, encoding, mode, flag, isDirectory, isFile } = get(entry)

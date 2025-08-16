@@ -7,7 +7,7 @@ import test from 'node:test'
 import index, { DIRECTORY, FILE } from '../src/index.js'
 
 test('index() should return a function', () => {
-  assert.strictEqual(typeof index(), 'function')
+  assert.equal(typeof index(), 'function')
 })
 
 test('index() should reject when structure is not an array', async () => {
@@ -119,7 +119,7 @@ test('index() should write a file with contents', async () => {
   ]
   const _structure = await instance(structure)
   const data = await fs.readFile(_structure[0].name, 'utf8')
-  assert.strictEqual(data, structure[0].contents)
+  assert.equal(data, structure[0].contents)
 })
 
 test('index() should write a directory without contents', async () => {
@@ -171,7 +171,7 @@ test('index() should use the process cwd as its cwd', async () => {
     },
   ]
   const _structure = await instance(structure)
-  assert.strictEqual(_structure[0].name, path.resolve(structure[0].name))
+  assert.equal(_structure[0].name, path.resolve(structure[0].name))
 })
 
 test('index() should reuse an existing directory', async () => {
@@ -197,7 +197,7 @@ test('index() should use a custom relative cwd as its cwd', async () => {
     },
   ]
   const _structure = await instance(structure)
-  assert.strictEqual(_structure[0].name, path.resolve(options.cwd, structure[0].name))
+  assert.equal(_structure[0].name, path.resolve(options.cwd, structure[0].name))
 })
 
 test('index() should use a custom absolute cwd as its cwd', async () => {
@@ -210,7 +210,7 @@ test('index() should use a custom absolute cwd as its cwd', async () => {
     },
   ]
   const _structure = await instance(structure)
-  assert.strictEqual(_structure[0].name, path.resolve(options.cwd, structure[0].name))
+  assert.equal(_structure[0].name, path.resolve(options.cwd, structure[0].name))
 })
 
 test('index() should cleanup non-persistent files when cleanup triggered manually', async () => {
@@ -224,7 +224,7 @@ test('index() should cleanup non-persistent files when cleanup triggered manuall
   ]
   await instance(structure)
   const deletedEntries = await instance.cleanup()
-  assert.strictEqual(deletedEntries.length, 1)
+  assert.equal(deletedEntries.length, 1)
 })
 
 test('index() should not cleanup persistent files when cleanup triggered manually', async () => {
@@ -237,7 +237,7 @@ test('index() should not cleanup persistent files when cleanup triggered manuall
   ]
   const _structure = await instance(structure)
   const deletedEntries = await instance.cleanup()
-  assert.strictEqual(deletedEntries.length, 0)
+  assert.equal(deletedEntries.length, 0)
   // Manual cleanup
   await fs.unlink(_structure[0].name)
 })
