@@ -193,14 +193,14 @@ const instance = fsify({
 
 ### Parameters
 
-- `options` `{?Object}` Options.
-  - `cwd` `{?String}` Custom relative or absolute path. Defaults to `process.cwd()`.
-  - `persistent` `{?Boolean}` Keep directories and files even when the process exists. Defaults to `true`.
-  - `force` `{?Boolean}` Allow deleting the current working directory and outside. Defaults to `false`.
+- `options` `{?object}` Options.
+  - `cwd` `{?string}` Custom relative or absolute path. Defaults to `process.cwd()`.
+  - `persistent` `{?boolean}` Keep directories and files even when the process exists. Defaults to `true`.
+  - `force` `{?boolean}` Allow deleting the current working directory and outside. Defaults to `false`.
 
 ### Returns
 
-- `{Function}({?Array})` [fsify instance](#instance-api).
+- `{Function}` [fsify instance](#instance-api).
 
 ## Instance API
 
