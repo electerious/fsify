@@ -9,16 +9,10 @@ Convert an array of objects into a persistent or temporary directory structure.
 - [Description](#description)
 - [Install](#install)
 - [Usage](#usage)
-  - [Structure with content](#structure-with-content)
-  - [Deeply nested structure](#deeply-nested-structure)
-  - [Temporary structure in existing directory](#temporary-structure-in-existing-directory)
-  - [Temporary structure with manual cleanup](#temporary-structure-with-manual-cleanup)
-  - [Structure from `tree`](#structure-from-tree)
 - [API](#api)
 - [Instance API](#instance-api)
 - [Structure](#structure)
-  - [Directory](#directory)
-  - [File](#file)
+- [Miscellaneous](#miscellaneous)
 
 ## Description
 
@@ -297,3 +291,22 @@ const file = {
   flag: 'w',
 }
 ```
+
+## Miscellaneous
+
+### Related
+
+- [tree](https://en.wikipedia.org/wiki/Tree_(command)) - Linux and Unix command that lists the contents of directories in a tree-like format.
+
+### Donate
+
+I am working hard on continuously developing and maintaining my projects. Please consider making a donation to keep the project going strong and me motivated.
+
+- [Become a GitHub sponsor](https://github.com/sponsors/electerious)
+- [Donate via PayPal](https://paypal.me/electerious)
+- [Buy me a coffee](https://www.buymeacoffee.com/electerious)
+
+### Links
+
+- [Follow me on Bluesky](https://bsky.app/profile/electerious.bsky.social)
+- [Follow me on Threads](https://www.threads.com/@electerious)
