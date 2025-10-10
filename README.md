@@ -296,7 +296,7 @@ const file = {
 
 ### Related
 
-- [tree](https://en.wikipedia.org/wiki/Tree_(command)) - Linux and Unix command that lists the contents of directories in a tree-like format.
+- [tree](<https://en.wikipedia.org/wiki/Tree_(command)>) - Linux and Unix command that lists the contents of directories in a tree-like format.
 
 ### Donate
 
