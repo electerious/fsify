@@ -20,7 +20,7 @@
   "homepage": "https://github.com/electerious/fsify",
   "repository": {
     "type": "git",
-    "url": "https://github.com/electerious/fsify.git"
+    "url": "git+https://github.com/electerious/fsify.git"
   },
   "license": "MIT",
   "type": "module",
