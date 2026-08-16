@@ -25,7 +25,7 @@ export default function fsify(options = {}) {
    * @returns {Promise<Array>} Parsed structure.
    */
   const instance = async function (structure = []) {
-    if (Array.isArray(structure) === false) {
+    if (!Array.isArray(structure)) {
       throw new TypeError(`'structure' must be an array`)
     }
 

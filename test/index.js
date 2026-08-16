@@ -26,7 +26,7 @@ test('index() should throw when options is not an object', () => {
 
 test('index() should do nothing when called without arguments', async () => {
   const instance = index()
-  await instance()
+  assert.deepEqual(await instance(), [])
 })
 
 test('index() should reject when directory name points to the current directory', async () => {
@@ -132,7 +132,7 @@ test('index() should write a directory without contents', async () => {
     },
   ]
   const _structure = await instance(structure)
-  await fs.readdir(_structure[0].name)
+  assert.deepEqual(await fs.readdir(_structure[0].name), [])
 })
 
 test('index() should return an array where each entry is an absolute path', async () => {
@@ -183,8 +183,9 @@ test('index() should reuse an existing directory', async () => {
       name: uuid(),
     },
   ]
-  await instance(structure)
-  await instance(structure)
+  const firstStructure = await instance(structure)
+  const secondStructure = await instance(structure)
+  assert.deepEqual(secondStructure, firstStructure)
 })
 
 test('index() should use a custom relative cwd as its cwd', async () => {
