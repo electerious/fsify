@@ -8,7 +8,7 @@ import cleanup from '../src/cleanup.js'
 test('cleanup() should remove exact paths recursively and return removed paths', () => {
   const directory = fs.mkdtempSync(path.join(process.cwd(), 'fsify-remove-XXXXXX-'))
   const nestedDirectory = path.join(directory, 'nested')
-  const file = path.join(nestedDirectory, 'literal[*].txt')
+  const file = path.join(nestedDirectory, 'literal[1].txt')
 
   fs.mkdirSync(nestedDirectory)
   fs.writeFileSync(file, '')
