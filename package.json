@@ -36,10 +36,8 @@
     "test": "npm run lint && node --test"
   },
   "dependencies": {
-    "del": "^6.1.1",
     "is-path-inside": "^4.0.0",
-    "is-plain-obj": "^4.1.0",
-    "slash": "^5.1.0"
+    "is-plain-obj": "^4.1.0"
   },
   "devDependencies": {
     "@electerious/eslint-config": "^6.0.0",
