@@ -3,9 +3,9 @@ import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
 import test from 'node:test'
-import removeEntries from '../src/remove-entries.js'
+import cleanup from '../src/cleanup.js'
 
-test('removeEntries() should remove exact paths recursively and return removed paths', () => {
+test('cleanup() should remove exact paths recursively and return removed paths', () => {
   const directory = fs.mkdtempSync(path.join(process.cwd(), 'fsify-remove-XXXXXX-'))
   const nestedDirectory = path.join(directory, 'nested')
   const file = path.join(nestedDirectory, 'literal[*].txt')
@@ -14,7 +14,7 @@ test('removeEntries() should remove exact paths recursively and return removed p
   fs.writeFileSync(file, '')
 
   try {
-    const removedEntries = removeEntries([nestedDirectory, file, file, path.join(directory, 'missing')])
+    const removedEntries = cleanup([nestedDirectory, file, file, path.join(directory, 'missing')])
 
     assert.deepEqual(
       removedEntries,
@@ -27,25 +27,25 @@ test('removeEntries() should remove exact paths recursively and return removed p
   }
 })
 
-test('removeEntries() should protect the current working directory and outside paths', () => {
+test('cleanup() should protect the current working directory and outside paths', () => {
   const currentDirectoryError = `Cannot delete the current working directory. Can be overridden with the \`force\` option.`
   const outsideDirectoryError = `Cannot delete files/directories outside the current working directory. Can be overridden with the \`force\` option.`
 
-  assert.throws(() => removeEntries([process.cwd()]), { message: currentDirectoryError })
+  assert.throws(() => cleanup([process.cwd()]), { message: currentDirectoryError })
 
   const outsidePath = path.dirname(process.cwd())
   const outsidePathError = outsidePath === process.cwd() ? currentDirectoryError : outsideDirectoryError
 
-  assert.throws(() => removeEntries([outsidePath]), { message: outsidePathError })
+  assert.throws(() => cleanup([outsidePath]), { message: outsidePathError })
 })
 
-test('removeEntries() should allow force removal outside the current working directory', () => {
+test('cleanup() should allow force removal outside the current working directory', () => {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'fsify-remove-XXXXXX-'))
   const file = path.join(directory, 'file')
   fs.writeFileSync(file, '')
 
   try {
-    assert.deepEqual(removeEntries([directory], true), [directory])
+    assert.deepEqual(cleanup([directory], true), [directory])
     assert.equal(fs.existsSync(directory), false)
   } finally {
     fs.rmSync(directory, { recursive: true, force: true })
